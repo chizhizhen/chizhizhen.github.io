@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Visual Studio下通过C#操作SQL Server数据库 | Zhizhen&#39;s Attic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="新建linq to entity时：1、VS2010中Tools选择Connect to Database，Server name在本地操作的话可以选择127.0.0.1或者写作localhost，如果登录服务器的话，写服务器所在IP地址即可。2、数据库连接完成之后，在右侧Server Explorer有Data Connection，FCDSQL下Tables可以查看数据库内容，也可以对数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Visual Studio下通过C#操作SQL Server数据库">
+<meta property="og:url" content="http://chizhizhen.github.io/2016/01/17/C-连接SQL-Server数据库的几个问题/index.html">
+<meta property="og:site_name" content="Zhizhen's Attic">
+<meta property="og:description" content="新建linq to entity时：1、VS2010中Tools选择Connect to Database，Server name在本地操作的话可以选择127.0.0.1或者写作localhost，如果登录服务器的话，写服务器所在IP地址即可。2、数据库连接完成之后，在右侧Server Explorer有Data Connection，FCDSQL下Tables可以查看数据库内容，也可以对数据库">
+<meta property="og:updated_time" content="2016-05-06T14:14:39.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Visual Studio下通过C#操作SQL Server数据库">
+<meta name="twitter:description" content="新建linq to entity时：1、VS2010中Tools选择Connect to Database，Server name在本地操作的话可以选择127.0.0.1或者写作localhost，如果登录服务器的话，写服务器所在IP地址即可。2、数据库连接完成之后，在右侧Server Explorer有Data Connection，FCDSQL下Tables可以查看数据库内容，也可以对数据库">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhizhen&#39;s Attic" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhizhen&#39;s Attic</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Many a little make a mickle!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/Publication">Publication</a>
+        
+          <a class="main-nav-link" href="/Project">Project</a>
+        
+          <a class="main-nav-link" href="/Misc">Misc</a>
+        
+          <a class="main-nav-link" href="/About">About</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://chizhizhen.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-C-连接SQL-Server数据库的几个问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/17/C-连接SQL-Server数据库的几个问题/" class="article-date">
+  <time datetime="2016-01-17T14:02:19.000Z" itemprop="datePublished">2016-01-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Visual Studio下通过C#操作SQL Server数据库
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>新建linq to entity时：<br>1、VS2010中Tools选择Connect to Database，Server name在本地操作的话可以选择127.0.0.1或者写作localhost，如果登录服务器的话，写服务器所在IP地址即可。<br>2、数据库连接完成之后，在右侧Server Explorer有Data Connection，FCDSQL下Tables可以查看数据库内容，也可以对数据库进行修改，但不能重命名。<br>3、在Refernces下有xx.edmx的内容里面存放三张表，这三张表之间可以进行联合查询，同时FCDSQLEntities dba = new FCDSQLEntities();语句可以调用<br>4、在Refernces下有App.Config里面存放该数据库的字符串连接，修改Data Source就可以访问异地的数据库内容<br>5、FCDDynamicInformation\FCDDynamicInformation\bin\Debug该指令下的.exe文件可以拷贝到任意电脑进行运行<a id="more"></a></li>
+<li><p>将C#内存数据库导入SQL Server数据库<br>1、创建实体Entities<br>2、连接外部数据库<br>3、在App.config中有该数据库的又该数据库的连接字符串，比如”Data Source=110.76.40.250,1533;Initial Catalog=PhysicianData;Persist Security Info=True;User ID=dlut;Password=999$%^”;</p>
+</li>
+<li><p>数据库查找时:<br>1、汉字信息要.Trim()将其排版好，没有空格等信息<br>2、在App.config中有FCDSQLEntities类似类名，用这个声明实体Entities<br>3、汉字信息在存储之前建立Hash值索引，并在SQL数据库中手动将其设为索引键</p>
+</li>
+<li><p>表之间相互关联：<br>1、一定有一张表的linkID设为主键，将Arraylist类型的数据排列开存储<br>2、将linkID为主键的表关联其他表，右键-&gt;relationships</p>
+</li>
+<li><p>数据库管理工具<br>1、SQL Server 2008：C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\VSShell\Common7\IDE\Ssms.exe<br>2、SQL Server 2012: C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\Ssme.exe</p>
+</li>
+<li><p>C#里创建SQL动态链表</p>
+</li>
+</ul>
+<p>ALTER PROCEDURE dbo.CreateSQLqueryTable<br>    /<em><br>    (<br>    @parameter1 int = 5,<br>    @parameter2 datatype OUTPUT<br>    )
+    </em>/<br>AS<br>    /<em> SET NOCOUNT ON </em>/<br>    declare @name nvarchar(40)<br>    declare @n int<br>    select @n = max(N) from SQLtbNValue<br>    set @name = ‘SQLtbSQLquery’ + cast(@n as varchar)</p>
+<pre><code>EXEC sp_rename &apos;SQLtbSQLquery&apos;, @name
+update SQLtbNValue set N = N+1
+
+CREATE TABLE [dbo].[SQLtbSQLquery](
+[randomid] [uniqueidentifier] NOT NULL,
+[City] [nvarchar](200) NULL,
+[startTime] [int] NULL,
+[endTime] [int] NULL,
+[linkID] [int] NULL,
+[roadName] [nvarchar](200) NULL,
+[startNode] [int] NULL,
+[endNode] [int] NULL,
+[averagespeed] [float] NULL,
+[roadClass] [tinyint] NULL,
+[announceTime] [int] NULL,
+[roadNameHash] [int] NULL,
+</code></pre><p>) ON [PRIMARY]<br>    RETURN</p>
+<ul>
+<li>SQL数据库中创建索引：</li>
+</ul>
+<p>Create Nonclustered Index FCDIndex1<br>on SQLtbSQLquery (startTime ASC)</p>
+<p>CREATE [UNIQUE] [CLUSTERED | NONCLUSTERED]<br>INDEX 索引名 ON  表名(列名 [ ASC | DESC ]) </p>
+<p>unique 创建唯一索引<br>clustered 创建聚集索引<br>nonclustered 创建非聚集索引<br>ASC/DESC 创建排序方式</p>
+<p>表中主键只能建立为clustered聚集索引</p>
+<ul>
+<li><p>SQL进行数据查询时操作顺序<br>1、先执行一次SQL建表操作；<br>2、Add  edmx，连接数据库；<br>3、在进行查找操作时，先在SQL Manager里建立索引项；</p>
+</li>
+<li><p>SQL中多表之间联合查询<br>static void Test()<br>{<br>  FCDSQLEntities db = new FCDSQLEntities();<br>  var record = db.SQLtbSQLquery.First();<br>  var positions=db.SQLtbPosition.Where(d =&gt; d.LinkID == record.linkID).ToList();<br>  //var positions=record.SQLtbPosition.ToList();<br>}</p>
+</li>
+<li><p>SQL查询语句精华<br>SELECT 查询语句精华<br>一、 简单查询 </p>
+</li>
+</ul>
+<p>简单的Transact-SQL查询只包括选择列表、FROM子句和WHERE子句。它们分别说明所查询列、查询的<br>表或视图、以及搜索条件等。例如，下面的语句查询testtable表中姓名为”张三”的nickname字段和email字段。<br>SELECT nickname,email<br>FROM testtable<br>WHERE name=’张三’</p>
+<p>(一) 选择列表<br>选择列表(select_list)指出所查询列，它可以是一组列名列表、星号、表达式、变量(包括局部变<br>量和全局变量)等构成。</p>
+<p>1、选择所有列<br>例如，下面语句显示testtable表中所有列的数据：<br>SELECT *<br>FROM testtable</p>
+<p>2、选择部分列并指定它们的显示次序<br>查询结果集合中数据的排列顺序与选择列表中所指定的列名排列顺序相同。<br>例如：<br>SELECT nickname,email<br>FROM testtable</p>
+<p>3、更改列标题<br>在选择列表中，可重新指定列标题。定义格式为：<br>列标题=列名<br>列名 列标题<br>如果指定的列标题不是标准的标识符格式时，应使用引号定界符，例如，下列语句使用汉字显示列<br>标题：<br>SELECT 昵称=nickname,电子邮件=email<br>FROM testtable</p>
+<p>4、删除重复行<br>SELECT语句中使用ALL或DISTINCT选项来显示表中符合条件的所有行或删除其中重复的数据行，默认<br>为ALL。使用DISTINCT选项时，对于所有重复的数据行在SELECT返回的结果集合中只保留一行。</p>
+<p>5、限制返回的行数<br>使用TOP n [PERCENT]选项限制返回的数据行数，TOP n说明返回n行，而TOP n PERCENT时，说明n是<br>表示一百分数，指定返回的行数等于总行数的百分之几。<br>例如：<br>SELECT TOP 2 <em><br>FROM testtable<br>SELECT TOP 20 PERCENT </em><br>FROM testtable</p>
+<p>(二) FROM子句<br>FROM子句指定SELECT语句查询及与查询相关的表或视图。在FROM子句中最多可指定256个表或视图，<br>它们之间用逗号分隔。<br>在FROM子句同时指定多个表或视图时，如果选择列表中存在同名列，这时应使用对象名限定这些列<br>所属的表或视图。例如在usertable和citytable表中同时存在cityid列，在查询两个表中的cityid时应<br>使用下面语句格式加以限定：<br>SELECT username,citytable.cityid<br>FROM usertable,citytable<br>WHERE usertable.cityid=citytable.cityid<br>在FROM子句中可用以下两种格式为表或视图指定别名：<br>表名 as 别名<br>表名 别名<br>例如上面语句可用表的别名格式表示为：<br>SELECT username,b.cityid<br>FROM usertable a,citytable b<br>WHERE a.cityid=b.cityid<br>SELECT不仅能从表或视图中检索数据，它还能够从其它查询语句所返回的结果集合中查询数据。<br>例如：<br>SELECT a.au_fname+a.au_lname<br>FROM authors a,titleauthor ta<br>(SELECT title_id,title<br>FROM titles<br>WHERE ytd_sales&gt;10000<br>) AS t<br>WHERE a.au_id=ta.au_id<br>AND ta.title_id=t.title_id<br>此例中，将SELECT返回的结果集合给予一别名t，然后再从中检索数据。</p>
+<p>(三) 使用WHERE子句设置查询条件<br>WHERE子句设置查询条件，过滤掉不需要的数据行。例如下面语句查询年龄大于20的数据：<br>SELECT *<br>FROM usertable<br>WHERE age&gt;20<br>WHERE子句可包括各种条件运算符：<br>比较运算符(大小比较)：&gt;、&gt;=、=、&lt;、&lt;=、&lt;&gt;、!&gt;、!&lt;<br>范围运算符(表达式值是否在指定的范围)： BETWEEN…AND…<br>NOT BETWEEN…AND…<br>列表运算符(判断表达式是否为列表中的指定项)：IN (项1,项2……)<br>NOT IN (项1,项2……)<br>模式匹配符(判断值是否与指定的字符通配格式相符):LIKE、NOT LIKE<br>空值判断符(判断表达式是否为空)：IS NULL、NOT IS NULL<br>逻辑运算符(用于多条件的逻辑连接)： NOT、AND、OR</p>
+<p>1、范围运算符例：age BETWEEN 10 AND 30相当于age&gt;=10 AND age&lt;=30<br>2、列表运算符例：country IN (‘Germany’,’China’)<br>3、模式匹配符例：常用于模糊查找，它判断列值是否与指定的字符串格式相匹配。可用于char、<br>varchar、text、ntext、datetime和smalldatetime等类型查询。<br>可使用以下通配字符：<br>百分号%：可匹配任意类型和长度的字符，如果是中文，请使用两个百分号即%%。<br>下划线_：匹配单个任意字符，它常用来限制表达式的字符长度。<br>方括号[]：指定一个字符、字符串或范围，要求所匹配对象为它们中的任一个。<br>[^]：其取值也[] 相同，但它要求所匹配对象为指定字符以外的任一个字符。<br>例如：<br>限制以Publishing结尾，使用 LIKE ‘%Publishing’<br>限制以A开头：LIKE ‘[A]%’<br>限制以A开头外：LIKE ‘[^A]%’<br>4、空值判断符例WHERE age IS NULL<br>5、逻辑运算符：优先级为NOT、AND、OR</p>
+<p>(四)查询结果排序<br>使用ORDER BY子句对查询返回的结果按一列或多列排序。ORDER BY子句的语法格式为：<br>ORDER BY {column_name [ASC|DESC]} [,…n]<br>其中 ASC表示升序，为默认值，DESC为降序。ORDER BY不能按ntext、text和image数据类型进行排<br>序。<br>例如：<br>SELECT *<br>FROM usertable<br>ORDER BY age desc,userid ASC<br>另外，可以根据表达式进行排序。</p>
+<p>二、 联合查询<br>UNION运算符可以将两个或两个以上上SELECT语句的查询结果集合合并成一个结果集合显示，即执行联<br>合查询。UNION的语法格式为：<br>select_statement<br>UNION [ALL] selectstatement<br>[UNION [ALL] selectstatement][…n]<br>其中selectstatement为待联合的SELECT查询语句。<br>ALL选项表示将所有行合并到结果集合中。不指定该项时，被联合查询结果集合中的重复行将只保留一<br>行。<br>联合查询时，查询结果的列标题为第一个查询语句的列标题。因此，要定义列标题必须在第一个查询语<br>句中定义。要对联合查询结果排序时，也必须使用第一查询语句中的列名、列标题或者列序号。<br>在使用UNION 运算符时，应保证每个联合查询语句的选择列表中有相同数量的表达式，并且每个查询选<br>择表达式应具有相同的数据类型，或是可以自动将它们转换为相同的数据类型。在自动转换时，对于数值类<br>型，系统将低精度的数据类型转换为高精度的数据类型。<br>在包括多个查询的UNION语句中，其执行顺序是自左至右，使用括号可以改变这一执行顺序。例如：<br>查询1 UNION (查询2 UNION 查询3)</p>
+<p>三、连接查询<br>通过连接运算符可以实现多个表查询。连接是关系数据库模型的主要特点，也是它区别于其它类型<br>数据库管理系统的一个标志。<br>在关系数据库管理系统中，表建立时各数据之间的关系不必确定，常把一个实体的所有信息存放在<br>一个表中。当检索数据时，通过连接操作查询出存放在多个表中的不同实体的信息。连接操作给用户带<br>来很大的灵活性，他们可以在任何时候增加新的数据类型。为不同实体创建新的表，尔后通过连接进行<br>查询。<br>连接可以在SELECT 语句的FROM子句或WHERE子句中建立，似是而非在FROM子句中指出连接时有助于<br>将连接操作与WHERE子句中的搜索条件区分开来。所以，在Transact-SQL中推荐使用这种方法。<br>SQL-92标准所定义的FROM子句的连接语法格式为：<br>FROM join_table join_type join_table<br>[ON (join_condition)]<br>其中join_table指出参与连接操作的表名，连接可以对同一个表操作，也可以对多表操作，对同一<br>个表操作的连接又称做自连接。<br>join_type 指出连接类型，可分为三种：内连接、外连接和交叉连接。内连接(INNER JOIN)使用比<br>较运算符进行表间某(些)列数据的比较操作，并列出这些表中与连接条件相匹配的数据行。根据所使用<br>的比较方式不同，内连接又分为等值连接、自然连接和不等连接三种。<br>外连接分为左外连接(LEFT OUTER JOIN或LEFT JOIN)、右外连接(RIGHT OUTER JOIN或RIGHT JOIN)<br>和全外连接(FULL OUTER JOIN或FULL JOIN)三种。与内连接不同的是，外连接不只列出与连接条件相匹<br>配的行，而是列出左表(左外连接时)、右表(右外连接时)或两个表(全外连接时)中所有符合搜索条件的<br>数据行。<br>交叉连接(CROSS JOIN)没有WHERE 子句，它返回连接表中所有数据行的笛卡尔积，其结果集合中的<br>数据行数等于第一个表中符合查询条件的数据行数乘以第二个表中符合查询条件的数据行数。<br>连接操作中的ON (join_condition) 子句指出连接条件，它由被连接表中的列和比较运算符、逻辑<br>运算符等构成。<br>无论哪种连接都不能对text、ntext和image数据类型列进行直接连接，但可以对这三种列进行间接<br>连接。例如：<br>SELECT p1.pub_id,p2.pub_id,p1.pr_info<br>FROM pub_info AS p1 INNER JOIN pub_info AS p2<br>ON DATALENGTH(p1.pr_info)=DATALENGTH(p2.pr_info)</p>
+<p>(一)内连接<br>内连接查询操作列出与连接条件匹配的数据行，它使用比较运算符比较被连接列的列值。内连接分<br>三种：<br>1、等值连接：在连接条件中使用等于号(=)运算符比较被连接列的列值，其查询结果中列出被连接<br>表中的所有列，包括其中的重复列。<br>2、不等连接： 在连接条件使用除等于运算符以外的其它比较运算符比较被连接的列的列值。这些<br>运算符包括&gt;、&gt;=、&lt;=、&lt;、!&gt;、!&lt;和&lt;&gt;。<br>3、自然连接：在连接条件中使用等于(=)运算符比较被连接列的列值，但它使用选择列表指出查询<br>结果集合中所包括的列，并删除连接表中的重复列。<br>例，下面使用等值连接列出authors和publishers表中位于同一城市的作者和出版社：<br>SELECT xxx<br>FROM authors AS a INNER JOIN publishers AS p<br>ON a.city=p.city<br>又如使用自然连接，在选择列表中删除authors 和publishers 表中重复列(city和state)：<br>SELECT a.xxx, p.pub_id,p.pub_name,p.country<br>FROM authors AS a INNER JOIN publishers AS p<br>ON a.city=p.city</p>
+<p>(二)外连接<br>内连接时，返回查询结果集合中的仅是符合查询条件( WHERE 搜索条件或 HAVING 条件)和连接条件<br>的行。而采用外连接时，它返回到查询结果集合中的不仅包含符合连接条件的行，而且还包括左表(左外<br>连接时)、右表(右外连接时)或两个边接表(全外连接)中的所有数据行。<br>如下面使用左外连接将论坛内容和作者信息连接起来：<br>SELECT a.xxx, b.xxx FROM luntan LEFT JOIN usertable as b<br>ON a.username=b.username<br>下面使用全外连接将city表中的所有作者以及user表中的所有作者，以及他们所在的城市：<br>SELECT a.xxx, b.xxx<br>FROM city as a FULL OUTER JOIN user as b<br>ON a.username=b.username</p>
+<p>(三)交叉连接<br>交叉连接不带WHERE 子句，它返回被连接的两个表所有数据行的笛卡尔积，返回到结果集合中的数<br>据行数等于第一个表中符合查询条件的数据行数乘以第二个表中符合查询条件的数据行数。<br>例，titles表中有6类图书，而publishers表中有8家出版社，则下列交叉连接检索到的记录数将等<br>于6*8=48行。<br>SELECT type,pub_name<br>FROM titles CROSS JOIN publishers<br>ORDER BY type</p>
+<p>################################################################<br>分页方案一：(利用Not In和SELECT TOP分页)<br>语句形式：<br>SELECT TOP 10 xxx<br>FROM TestTable<br>WHERE (ID NOT IN<br>(SELECT TOP 20 id<br>FROM TestTable<br>ORDER BY id))<br>ORDER BY ID</p>
+<p>SELECT TOP 页大小<br>FROM TestTable xxx<br>WHERE (ID NOT IN<br>(SELECT TOP 页大小*页数 id<br>FROM 表<br>ORDER BY id))<br>ORDER BY ID</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chizhizhen.github.io/2016/01/17/C-连接SQL-Server数据库的几个问题/" data-id="ciz681e1l0009qgfacvdsczvp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Languages/">Languages</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/22/初尝AlexNet/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          初尝AlexNet
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/17/来自母亲的信/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">来自母亲的信</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Image-Processing/">Image Processing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode-OJ/">LeetCode OJ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Object-Detection/">Object Detection</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Text-Editor/">Text Editor</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Languages/">Languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode-OJ/">LeetCode OJ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Projects/">Projects</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Softwares/">Softwares</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sources/">Sources</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂记/">杂记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Academic-Research/" style="font-size: 20px;">Academic Research</a> <a href="/tags/Algorithms/" style="font-size: 10px;">Algorithms</a> <a href="/tags/Languages/" style="font-size: 12.5px;">Languages</a> <a href="/tags/LeetCode-OJ/" style="font-size: 10px;">LeetCode OJ</a> <a href="/tags/Projects/" style="font-size: 10px;">Projects</a> <a href="/tags/Softwares/" style="font-size: 17.5px;">Softwares</a> <a href="/tags/Sources/" style="font-size: 15px;">Sources</a> <a href="/tags/杂记/" style="font-size: 15px;">杂记</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/19/Window-Data-Layer-in-Caffe/">Window Data Layer in Caffe</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/Vehicle-Detection-Tracking-with-some-auxiliary-functions/">Vehicle Detection, Tracking with some auxiliary functions</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/一段将来给我孩子的话/">一段将来给我孩子的话</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/19/新版caffe的MATLAB接口/">新版caffe的MATLAB接口</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/06/Git时如何解决出现：Commit-your-changes-or-stash-them-before-you-can-merge/">Git时如何解决出现：Commit your changes or stash them before you can merge</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget tag">
+<h3 class="title">Friends</h3>
+<ul class="entry">
+<li><a href="http://www.ee.cuhk.edu.hk/~yangli/" title="Li Hongyang">Hongyang Li</a></li>
+<li><a href="https://sites.google.com/site/jingjingwanghomepage/" title="Wang Jingjing">Jingjing Wang</a></li>
+<li><a href="http://ice.dlut.edu.cn/lu/index.html" title="Lu Huchuan">Huchuan Lu</a></li>
+<li><a href="http://faculty.ucmerced.edu/mhyang/" title="Yang Ming-Hsuan">Ming-Hsuan Yang</a></li>
+<li><a href="http://karpathy.github.io/" title="Andrej Karpathy">Andrej Karpathy</a></li>
+<li><a href="http://www.theclevercarrot.com/" title="The Clever Carrot">The Clever Carrot</a></li>
+</ul>
+</div>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Chi Zhizhen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/Publication" class="mobile-nav-link">Publication</a>
+  
+    <a href="/Project" class="mobile-nav-link">Project</a>
+  
+    <a href="/Misc" class="mobile-nav-link">Misc</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

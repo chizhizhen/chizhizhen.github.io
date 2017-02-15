@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>新版caffe的MATLAB接口 | Zhizhen&#39;s Attic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. Model+prototxtmodel = ‘./models/deploy.prototxt’;weights = ‘./models/*.caffemodel’;
+2. GPU/CPU使用CPU：caffe.set_mode_cpu();使用GPU并指定gpu_id：caffe.set_mode_gpu();caffe.set_device(gpu_id);">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新版caffe的MATLAB接口">
+<meta property="og:url" content="http://chizhizhen.github.io/2016/05/19/新版caffe的MATLAB接口/index.html">
+<meta property="og:site_name" content="Zhizhen's Attic">
+<meta property="og:description" content="1. Model+prototxtmodel = ‘./models/deploy.prototxt’;weights = ‘./models/*.caffemodel’;
+2. GPU/CPU使用CPU：caffe.set_mode_cpu();使用GPU并指定gpu_id：caffe.set_mode_gpu();caffe.set_device(gpu_id);">
+<meta property="og:updated_time" content="2016-05-19T02:20:17.310Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="新版caffe的MATLAB接口">
+<meta name="twitter:description" content="1. Model+prototxtmodel = ‘./models/deploy.prototxt’;weights = ‘./models/*.caffemodel’;
+2. GPU/CPU使用CPU：caffe.set_mode_cpu();使用GPU并指定gpu_id：caffe.set_mode_gpu();caffe.set_device(gpu_id);">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhizhen&#39;s Attic" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhizhen&#39;s Attic</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Many a little make a mickle!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/Publication">Publication</a>
+        
+          <a class="main-nav-link" href="/Project">Project</a>
+        
+          <a class="main-nav-link" href="/Misc">Misc</a>
+        
+          <a class="main-nav-link" href="/About">About</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://chizhizhen.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-新版caffe的MATLAB接口" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/19/新版caffe的MATLAB接口/" class="article-date">
+  <time datetime="2016-05-19T01:31:16.000Z" itemprop="datePublished">2016-05-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Caffe/">Caffe</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      新版caffe的MATLAB接口
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="1-Model-prototxt"><a href="#1-Model-prototxt" class="headerlink" title="1. Model+prototxt"></a>1. Model+prototxt</h4><p>model = ‘./models/deploy.prototxt’;<br>weights = ‘./models/<em>*</em>.caffemodel’;</p>
+<h4 id="2-GPU-CPU"><a href="#2-GPU-CPU" class="headerlink" title="2. GPU/CPU"></a>2. GPU/CPU</h4><p>使用CPU：<br>caffe.set_mode_cpu();<br>使用GPU并指定gpu_id：<br>caffe.set_mode_gpu();<br>caffe.set_device(gpu_id);<br><a id="more"></a></p>
+<h4 id="3-访问layers和blobs"><a href="#3-访问layers和blobs" class="headerlink" title="3. 访问layers和blobs"></a>3. 访问layers和blobs</h4><p>(a) 创建网络<br>net = caffe.Net(model, weights, ‘test’); % create net and load weights<br>或者使用：<br>net = caffe.Net(model, ‘test’); % create net but not load weights<br>net.copy_from(weights); % load weights</p>
+<p>会生成一个如下的net对象（VGG为列）：<br>  Net with properties:<br>           layer_vec: [1x32 caffe.Layer]<br>            blob_vec: [1x21 caffe.Blob]<br>              inputs: {‘data’}<br>             outputs: {‘prob’}<br>    name2layer_index: [32x1 containers.Map]<br>     name2blob_index: [21x1 containers.Map]<br>         layer_names: {32x1 cell}<br>          blob_names: {21x1 cell}<br>(b) 访问blob<br>你可以访问网络中的每一个blob，将data的blob填充为全一：<br>net.blobs(‘data’).set_data(ones(net.blobs(‘data’).shape));<br>将data的blob中数值全部乘以10：<br>net.blobs(‘data’).set_data(net.blobs(‘data’).get_data() * 10);</p>
+<p>所以访问blob成员可以使用：<br>net.blobs(‘data’).get_data(), net.blobs(‘conv1_1’).get_data()<br>net.blobs(‘data’).shape, net.blobs(‘conv1_1’).shape</p>
+<p>(c) 访问layer<br>你也可以访问网络的每一层，以便你作一些网络调整。例如把conv1参数乘以10：<br>net.params(‘conv1’, 1).set_data(net.params(‘conv1’, 1).get_data() <em> 10); % set weights<br>net.params(‘conv1’, 2).set_data(net.params(‘conv1’, 2).get_data() </em> 10); % set bias<br>你也可以如下代码：<br>net.layers(‘conv1’).params(1).set_data(net.layers(‘conv1’).params(1).get_data() <em> 10);<br>net.layers(‘conv1’).params(2).set_data(net.layers(‘conv1’).params(2).get_data() </em> 10);</p>
+<p>所以访问layer成员可以使用：<br>net.layers(‘conv1_1’).params(1).get_data(), net.layers(‘conv2_1’).params(1).get_data()<br>net.layers(‘conv1_1’).params(1).shape, net.layers(‘conv2_1’).params(1).shape</p>
+<h4 id="forward-backward"><a href="#forward-backward" class="headerlink" title="forward/backward"></a>forward/backward</h4><p>前向和后向计算可以使用net.forward或者net.forward_prefilled实现。函数net.forward将一个包含输入blob(s)的cell数组作为输入，并输出一个包含输出blob(s)的cell数组。函数net.forward_prefilled将使用输入blob(s)中的已有数据进行计算，没有输入数据，没有输出数据。</p>
+<p>在通过一些方法（如：data = rand(net.blobs(‘data’).shape);）产生输入数据后，你可以运行：<br>res = net.forward({data});<br>prob = res{1};</p>
+<p>或者<br>net.blobs(‘data’).set_data(data);<br>net.forward_prefilled();<br>prob = net.blobs(‘prob’).get_data();</p>
+<p>后向计算使用net.backward或者net.backward_prefilled，并且把get_data和set_data替换为get_diff和set_diff。在通过一些方法（例如prob_diff = rand(net.blobs(‘prob’).shape);）产生输出blobs的梯度后，你可以运行：<br>res = net.backward({prob_diff});<br>data_diff = res{1};</p>
+<p>或者<br>net.blobs(‘prob’).set_diff(prob_diff);<br>net.backward_prefilled();<br>data_diff = net.blobs(‘data’).get_diff();<br>然而，如上的后向计算并不能得到正确的结果，因为Caffe默认网络不需要后向计算。为了获取正确的后向计算结果，你需要在你的网络prototxt文件中设置force_backward: true<br>在完成前向和后向计算之后，你可以获得中间blobs的data和diff。例如，你可以在前向计算后获取pool5的特征。</p>
+<h4 id="reshape"><a href="#reshape" class="headerlink" title="reshape"></a>reshape</h4><p>net.blobs(‘data’).reshape([227 227 3 1]); % reshape blob ‘data’<br>net.reshape();</p>
+<h4 id="network-training"><a href="#network-training" class="headerlink" title="network training"></a>network training</h4><p>假设你按照<a href="http://caffe.berkeleyvision.org/gathered/examples/imagenet.html" target="_blank" rel="external">ImageNET Tutorial</a>的方法创建了训练lmdb和验证lmdb，产生一个solver并且在ILSVRC 2012 分类数据集上训练：<br>solver = caffe.Solver(‘./models/bvlc_reference_caffenet/solver.prototxt’);</p>
+<p>这样可以创建一个solver对象：<br>  Solver with properties:</p>
+<pre><code>      net: [1x1 caffe.Net]
+test_nets: [1x1 caffe.Net]
+</code></pre><p>训练代码：<br>solver.solve();</p>
+<p>如果只想训练迭代1000次：<br>solver.step(1000);</p>
+<p>来获取迭代数量：<br>iter = solver.iter();</p>
+<p>来获取这个网络：<br>train_net = solver.net;<br>test_net = solver.test_nets(1);</p>
+<p>假设从一个snapshot中恢复网络训练：<br>solver.restore(‘your_snapshot.solverstate’);</p>
+<h4 id="input-output"><a href="#input-output" class="headerlink" title="input/output"></a>input/output</h4><p>caffe.io类提供了基本的输入函数load_image和read_mean。例如，读取ILSVRC 2012 mean文件（假设你已经通过运行./data/ilsvrc12/get_ilsvrc_aux.sh下载imagenet例程辅助文件）</p>
+<p>mean_data = caffe.io.read_mean(‘./data/ilsvrc12/imagenet_mean.binaryproto’);</p>
+<p>为了读取Caffe例程图片，并且resize到[width, height]，且假设width = 256; height = 256;</p>
+<p>im_data = caffe.io.load_image(‘./examples/images/cat.jpg’);<br>im_data = imresize(im_data, [width, height]); % resize using Matlab’s imresize</p>
+<p>注意：width是最快的维度，通道为BGR，与Matlab存取图片的一般方式不一样。如果你不想要使用caffe.io.load_image，且想自己导入一幅图片：</p>
+<p>im_data = imread(‘./examples/images/cat.jpg’); % read image<br>im_data = im_data(:, :, [3, 2, 1]); % convert from RGB to BGR<br>im_data = permute(im_data, [2, 1, 3]); % permute width and height<br>im_data = single(im_data); % convert to single precision</p>
+<p>你也可以看一下caffe/matlab/demo/classification_demo.m文件，了解如何将输入图片crop成多个输入块。</p>
+<p>你可以查看caffe/matlab/hdf5creation，了解如何通过Matlab读和写HDF5数据。但不提供额外的数据输出函数，因为在Matlab本身已经具有了强大的功能。</p>
+<h4 id="Reset"><a href="#Reset" class="headerlink" title="Reset"></a>Reset</h4><p>调用caffe.reset_all()来清理你所创建的所有的solvers，和stand-alone nets。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chizhizhen.github.io/2016/05/19/新版caffe的MATLAB接口/" data-id="ciz681e5v002vqgfauwz67b12" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sources/">Sources</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/20/一段将来给我孩子的话/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          一段将来给我孩子的话
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/06/Git时如何解决出现：Commit-your-changes-or-stash-them-before-you-can-merge/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Git时如何解决出现：Commit your changes or stash them before you can merge</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Image-Processing/">Image Processing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode-OJ/">LeetCode OJ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Object-Detection/">Object Detection</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Text-Editor/">Text Editor</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Languages/">Languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode-OJ/">LeetCode OJ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Projects/">Projects</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Softwares/">Softwares</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sources/">Sources</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂记/">杂记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Academic-Research/" style="font-size: 20px;">Academic Research</a> <a href="/tags/Algorithms/" style="font-size: 10px;">Algorithms</a> <a href="/tags/Languages/" style="font-size: 12.5px;">Languages</a> <a href="/tags/LeetCode-OJ/" style="font-size: 10px;">LeetCode OJ</a> <a href="/tags/Projects/" style="font-size: 10px;">Projects</a> <a href="/tags/Softwares/" style="font-size: 17.5px;">Softwares</a> <a href="/tags/Sources/" style="font-size: 15px;">Sources</a> <a href="/tags/杂记/" style="font-size: 15px;">杂记</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/19/Window-Data-Layer-in-Caffe/">Window Data Layer in Caffe</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/Vehicle-Detection-Tracking-with-some-auxiliary-functions/">Vehicle Detection, Tracking with some auxiliary functions</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/一段将来给我孩子的话/">一段将来给我孩子的话</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/19/新版caffe的MATLAB接口/">新版caffe的MATLAB接口</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/06/Git时如何解决出现：Commit-your-changes-or-stash-them-before-you-can-merge/">Git时如何解决出现：Commit your changes or stash them before you can merge</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget tag">
+<h3 class="title">Friends</h3>
+<ul class="entry">
+<li><a href="http://www.ee.cuhk.edu.hk/~yangli/" title="Li Hongyang">Hongyang Li</a></li>
+<li><a href="https://sites.google.com/site/jingjingwanghomepage/" title="Wang Jingjing">Jingjing Wang</a></li>
+<li><a href="http://ice.dlut.edu.cn/lu/index.html" title="Lu Huchuan">Huchuan Lu</a></li>
+<li><a href="http://faculty.ucmerced.edu/mhyang/" title="Yang Ming-Hsuan">Ming-Hsuan Yang</a></li>
+<li><a href="http://karpathy.github.io/" title="Andrej Karpathy">Andrej Karpathy</a></li>
+<li><a href="http://www.theclevercarrot.com/" title="The Clever Carrot">The Clever Carrot</a></li>
+</ul>
+</div>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Chi Zhizhen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/Publication" class="mobile-nav-link">Publication</a>
+  
+    <a href="/Project" class="mobile-nav-link">Project</a>
+  
+    <a href="/Misc" class="mobile-nav-link">Misc</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

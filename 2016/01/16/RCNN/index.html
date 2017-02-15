@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>RCNN:Regions with Convolutional Neural Network Features | Zhizhen&#39;s Attic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Created by Ross Girshick, Jeff Donahue, Trevor Darrell and Jitendra Malik at UC Berkeley EECS.
+
+Installing R-CNN1.Prerequisitesi. MATLAB (tested with 2013a on 64-bit Linux)ii. Caffe’s prerequisites2.I">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RCNN:Regions with Convolutional Neural Network Features">
+<meta property="og:url" content="http://chizhizhen.github.io/2016/01/16/RCNN/index.html">
+<meta property="og:site_name" content="Zhizhen's Attic">
+<meta property="og:description" content="Created by Ross Girshick, Jeff Donahue, Trevor Darrell and Jitendra Malik at UC Berkeley EECS.
+
+Installing R-CNN1.Prerequisitesi. MATLAB (tested with 2013a on 64-bit Linux)ii. Caffe’s prerequisites2.I">
+<meta property="og:updated_time" content="2016-01-17T09:02:10.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RCNN:Regions with Convolutional Neural Network Features">
+<meta name="twitter:description" content="Created by Ross Girshick, Jeff Donahue, Trevor Darrell and Jitendra Malik at UC Berkeley EECS.
+
+Installing R-CNN1.Prerequisitesi. MATLAB (tested with 2013a on 64-bit Linux)ii. Caffe’s prerequisites2.I">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhizhen&#39;s Attic" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhizhen&#39;s Attic</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Many a little make a mickle!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/Publication">Publication</a>
+        
+          <a class="main-nav-link" href="/Project">Project</a>
+        
+          <a class="main-nav-link" href="/Misc">Misc</a>
+        
+          <a class="main-nav-link" href="/About">About</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://chizhizhen.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-RCNN" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/16/RCNN/" class="article-date">
+  <time datetime="2016-01-16T14:17:19.000Z" itemprop="datePublished">2016-01-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Object-Detection/">Object Detection</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RCNN:Regions with Convolutional Neural Network Features
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Created-by-Ross-Girshick-Jeff-Donahue-Trevor-Darrell-and-Jitendra-Malik-at-UC-Berkeley-EECS"><a href="#Created-by-Ross-Girshick-Jeff-Donahue-Trevor-Darrell-and-Jitendra-Malik-at-UC-Berkeley-EECS" class="headerlink" title="Created by Ross Girshick, Jeff Donahue, Trevor Darrell and Jitendra Malik at UC Berkeley EECS."></a>Created by Ross Girshick, Jeff Donahue, Trevor Darrell and Jitendra Malik at UC Berkeley EECS.</h4><hr>
+<ul>
+<li>Installing R-CNN<br>1.<strong>Prerequisites</strong><br>i. MATLAB (tested with 2013a on 64-bit Linux)<br>ii. Caffe’s <a href="http://caffe.berkeleyvision.org/installation.html#prequequisites" target="_blank" rel="external">prerequisites</a><br>2.<strong>Install Caffe</strong> (this is the most complicated part)<br>i. Download this tagged release of Caffe<br>ii. Follow the Caffe <a href="http://caffe.berkeleyvision.org/installation.html" target="_blank" rel="external">installation instructions</a><br>iii. Let’s call the place where you installed caffe CAFFE_ROOT (you can run export CAFFE_ROOT=$(pwd))<br>iv. <em>Important</em>: Make sure to compile the Caffe MATLAB wrapper, which is not built by default: make matcaffe<br>v. <em>Important</em>: Make sure to run cd $CAFFE_ROOT/data/ilsvrc12 &amp;&amp; ./get_ilsvrc_aux.sh to download the ImageNet image mean<a id="more"></a>
+3.<strong>Install R-CNN</strong><br>i. Get the R-CNN source code by cloning the repository: git clone git@github.com:rbgirshick/rcnn.git<br>ii. Now change into the R-CNN source code directory: cd rcnn<br>iii. R-CNN expects to find Caffe in external/caffe, so create a symlink: ln -sf $CAFFE_ROOT external/caffe<br>iv. Start MATLAB (make sure you’re still in the rcnn directory): matlab<br>v. You’ll be prompted to download the <a href="http://disi.unitn.it/~uijlings/MyHomepage/index.php#page=projects1" target="_blank" rel="external">Selective Search</a> code, which we cannot redistribute. Afterwards, you should see the message R-CNN startup done followed by the MATLAB prompt &gt;&gt;.<br>vi. Run the build script: &gt;&gt; rcnn_build() (builds <a href="http://www.csie.ntu.edu.tw/~cjlin/liblinear/" target="_blank" rel="external">liblinear</a> and <a href="http://www.science.uva.nl/research/publications/2013/UijlingsIJCV2013/" target="_blank" rel="external">Selective Search</a>). Don’t worry if you see compiler warnings while building liblinear, this is normal on my system.<br>vii. Check that Caffe and MATLAB wrapper are set up correctly (this code should run without error): &gt;&gt; key = caffe(‘get_init_key’); (expected output is key = -2)<br>viii. Download the data package, which includes precompute models (see below).</li>
+</ul>
+<p><strong>Common issues</strong>: You may need to set an LD_LIBRARY_PATH before you start MATLAB. If you see a message like “Invalid MEX-file ‘/path/to/rcnn/external/caffe/matlab/caffe/caffe.mexa64’: libmkl_rt.so: cannot open shared object file: No such file or directory” then make sure that CUDA and MKL are in your LD_LIBRARY_PATH. On my system, I use:</p>
+<p><em>export LD_LIBRARY_PATH=/opt/intel/mkl/lib/intel64:/usr/local/cuda/lib64</em></p>
+<hr>
+<ul>
+<li>Downloading precomputed models (the data package)</li>
+</ul>
+<p>The quickest way to get started is to download precomputed R-CNN detectors. Currently we have detectors trained on PASCAL VOC 2007 train+val and 2012 train. Unfortunately the download is large (1.5GB), so brew some coffee or take a walk while waiting.<br>From the rcnn folder, run the data fetch script: ./data/fetch_data.sh.<br>This will populate the rcnn/data folder with caffe_nets, rcnn_models and selective_search_data. Seercnn/data/README.md for details.</p>
+<hr>
+<ul>
+<li>Running an R-CNN detector on an image</li>
+</ul>
+<p>Let’s assume that you’ve downloaded the precomputed detectors. Now:</p>
+<ol>
+<li>Change to where you installed R-CNN: cd rcnn.</li>
+<li>Start MATLAB matlab.<br><strong>Important</strong>: if you don’t see the message R-CNN startup done when MATLAB starts, then you probably didn’t start MATLAB in rcnn directory.</li>
+<li>Run the demo: &gt;&gt; rcnn_demo</li>
+<li>Enjoy the detected bicycle and person</li>
+</ol>
+<hr>
+<ul>
+<li>Training your own R-CNN detector on PASCAL VOC</li>
+</ul>
+<p>Let’s use PASCAL VOC 2007 as an example. The basic pipeline is:<br><strong>extract features to disk -&gt; train SVMs -&gt; test</strong><br>You’ll need about 200GB of disk space free for the feature cache (which is stored in rcnn/feat_cache by default; symlink rcnn/feat_cache elsewhere if needed). It’s best if the feature cache is on a fast, local disk.Before running the pipeline, we first need to install the PASCAL VOC 2007 dataset.</p>
+<p><strong>整套算法流程非常简单</strong>：</p>
+<ul>
+<li>caffemodel—&gt;finetune(PASCAL VOC07/12)—&gt;extract features—&gt;SVM—&gt;w&amp;b —for training</li>
+<li>input_data—&gt;finetuned_model—&gt;features—&gt;SVM—&gt;scores —for testing</li>
+</ul>
+<hr>
+<ul>
+<li>Installing PASCAL VOC 2007<br>i. Download the training, validation, test data and VOCdevkit:<br> wget <a href="http://pascallin.ecs.soton.ac.uk/challenges/VOC/voc2007/VOCtrainval_06-Nov-2007.tar" target="_blank" rel="external">http://pascallin.ecs.soton.ac.uk/challenges/VOC/voc2007/VOCtrainval_06-Nov-2007.tar</a><br> wget <a href="http://pascallin.ecs.soton.ac.uk/challenges/VOC/voc2007/VOCtest_06-Nov-2007.tar" target="_blank" rel="external">http://pascallin.ecs.soton.ac.uk/challenges/VOC/voc2007/VOCtest_06-Nov-2007.tar</a><br> wget <a href="http://pascallin.ecs.soton.ac.uk/challenges/VOC/voc2007/VOCdevkit_08-Jun-2007.tar" target="_blank" rel="external">http://pascallin.ecs.soton.ac.uk/challenges/VOC/voc2007/VOCdevkit_08-Jun-2007.tar</a><br>ii. Extract all of these tars into one directory, it’s called VOCdevkit.<br> tar xvf VOCtrainval_06-Nov-2007.tar<br> tar xvf VOCtest_06-Nov-2007.tar<br> tar xvf VOCdevkit_08-Jun-2007.tar<br>iii. It should have this basic structure:<br> VOCdevkit/                             % development kit<br> VOCdevkit/VOCcode/                     % VOC utility code<br> VOCdevkit/VOC2007                      % image sets, annotations, etc.<br> … and several other directories …<br>iv. I use a symlink to hook the R-CNN codebase to the PASCAL VOC dataset:<br> <em>ln -sf /your/path/to/voc2007/VOCdevkit /path/to/rcnn/datasets/VOCdevkit2007</em></li>
+</ul>
+<hr>
+<ul>
+<li>Extracting features<br>+&gt; rcnn_exp_cache_features(‘train’);   % chunk1<br>+&gt; rcnn_exp_cache_features(‘val’);     % chunk2<br>+&gt; rcnn_exp_cache_features(‘test_1’);  % chunk3<br>+&gt; rcnn_exp_cache_features(‘test_2’);  % chunk4<br><strong>Pro tip</strong>: on a machine with one hefty GPU (e.g., k20, k40, titan) and a six-core processor, I run start two MATLAB sessions each with a three worker matlabpool. I then run chunk1 and chunk2 in parallel on that machine. In this setup, completing chunk1 and chunk2 takes about 8-9 hours (depending on your CPU/GPU combo and disk) on a single machine. Obviously, if you have more machines you can hack this function to split the workload.<br>这里提取特征分两个阶段<br>一. 在RCNN/experiments中提取PASCAL-07的图片特征<br>在rcnn_cache_pool5_features.m中计算每张图片特征<br>binaryfile: data/caffe_nets/finetune_voc_2007_trainval_iter_70k<br>def_file: model-defs/rcnn_batch_256_output_pool5.prototxt<br>roidb中保存JPEG中selective search(简写ss)-boxes的位置以及对应的class标签<br>之后利用rcnn_features提取特征、同roidb一起保存作图片特征<br>二. 所有的train、val、test的数据储存在imdb/cache/roidb_voc_2007_train.mat中，包括 boxes, groundtruth, classes, overlap 和 features(目前为空)<br>/feat_cache/v1_finetune_voc_2007_trainval_iter_70k/…/xxx.mat中存放每幅图的<br>boxes($n \times 4$), GT($n \times 1$), classes($n \times 1$), overlap($n \times 20$), feat($n \times 9216$), 其中9216是pooling_5层的输出<br>选该层作输出feature map两方面原因：<br>(1) 根据pool5层输出很容易计算得到fc6和fc7的值；<br>(2) 由于fc层Dropout稀疏性，pool5层特征比fc7层压缩的更好；<br>三. /experiments/cachedir/voc_2007_trainval/gt_pos_layer_5.mat<br>得到5011张imgs的正样本特征以及特征所属的类<br>X_pos  cell(20,1)<br>e.g. cell(1,1)—&gt;xxx $\times$ 9216 features (xxx属于第一类物体的所有特征)<br>keys_pos  cell(20,1)<br>e.g. cell(1,1)—&gt;第 i 张图片，属于第j类的有length(sel)个，sel是特征属于 j 类的标号<br>以上是用于SVM training的正样本特征及标签<br>四. SVM训练的负样本：<br>在5011张图片中从1~5011<br>针对每张图片计算20类的负样本特征<br>x_neg  cell(20,1)<br>key_neg  cell(20,1)<br>五. SVM训练参数<br>llm = liblinear(y, X, ll_opts, ‘col’)<br>w = single(llm.w(1:end-1)’);<br>b = single(llm.w(end) 乘 opts.bias_mult);<br>Y = $1 \times n$(+1,+1…/-1,-1…), X = $4096 \times n$<br>opts:{w1=2, c=0.001,s=3,B=10}</li>
+</ul>
+<hr>
+<ul>
+<li>Training R-CNN models and testing</li>
+</ul>
+<p>Now to run the training and testing code, use the following experiments script:<br>+&gt; test_results = rcnn_exp_train_and_test()<br><strong>Note</strong>: The training and testing procedures save models and results under rcnn/cachedir by default. You can customize this by creating a local config file named rcnn_config_local.m and defining the experiment directory variable EXP_DIR. Look at rcnn_config_local.example.m for an example.<br>六. 测试时，rcnn_test.m<br>aboxes中保存每幅测试图片在每类中的各个bounding box对应该类的得分.<br>[bounding box, scores]{$5\times1$}<br>七. 改变rcnn_model的参数<br>{w, b}: ../experiments/rcnn_exp_train_and_test.m —&gt; rcnn_train.m<br>因为SVM中w和b均由finetune之后特征计算得到，所以单纯更改caffemodel是不可行的。<br>重新更改binary_file，然后训练SVM的w和b<br>进而save([Directory, ‘rcnn_model_unfinetuned’], ‘rcnn_model’)</p>
+<hr>
+<ul>
+<li>Training an R-CNN detector on another dataset·</li>
+</ul>
+<p>It should be easy to train an R-CNN detector using another detection dataset as long as that dataset hascomplete bounding box annotations (i.e., all instances of all classes are labeled).</p>
+<p>To support a new dataset, you define three functions: (1) one that returns a structure that describes the class labels and list of images; (2) one that returns a region of interest (roi) structure that describes the bounding box annotations; and (3) one that provides an test evaluation function.</p>
+<p>You can follow the PASCAL VOC implementation as your guide:</p>
+<ul>
+<li>imdb/imdb_from_voc.m (list of images and classes)</li>
+<li>imdb/roidb_from_voc.m (region of interest database)</li>
+<li>imdb/imdb_eval_voc.m (evalutation)</li>
+</ul>
+<hr>
+<ul>
+<li>Fine-tuning a CNN for detection with Caffe</li>
+</ul>
+<p>As an example, let’s see how you would fine-tune a CNN for detection on PASCAL VOC 2012.</p>
+<ol>
+<li><p>Create window files for VOC 2012 train and VOC 2012 val.<br>i. Start MATLAB in the rcnn directory<br>ii. Get the imdb for VOC 2012 train: &gt;&gt; imdb_train = imdb_from_voc(‘datasets/VOCdevkit2012’, ‘train’, ‘2012’);<br>iii. Get the imdb for VOC 2012 val: &gt;&gt; imdb_val = imdb_from_voc(‘datasets/VOCdevkit2012’, ‘val’, ‘2012’);<br>iv. Create the window file for VOC 2012 train: &gt;&gt; rcnn_make_window_file(imdb_train, ‘external/caffe/examples/pascal-finetuning’);<br>v. Create the window file for VOC 2012 val: &gt;&gt; rcnn_make_window_file(imdb_val, ‘external/caffe/examples/pascal-finetuning’);<br>vi. Exit MATLAB</p>
+</li>
+<li><p>Run fine-tuning with Caffe</p>
+</li>
+</ol>
+<p>i. Copy the fine-tuning prototxt files: cp finetuning/voc_2012_prototxt/pascal<em>finetune</em>* external/caffe/examples/pascal-finetuning/<br>ii. Change directories to external/caffe/examples/pascal-finetuning<br>iii. Execute the fine-tuning code (make sure to replace /path/to/rcnn with the actual path to where R-CNN is installed):</p>
+<p>GLOG_logtostderr=1 ../../build/tools/finetune_net.bin \<br>pascal_finetune_solver.prototxt \<br>/path/to/rcnn/data/caffe_nets/ilsvrc_2012_train_iter_310k 2&gt;&amp;1 | tee log.txt</p>
+<p><strong>Note</strong>: In my experiments, I’ve let fine-tuning run for 70k iterations, although with hindsight it appears that improvement in mAP saturates at around 40k iterations.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chizhizhen.github.io/2016/01/16/RCNN/" data-id="ciz681e2g000sqgfangc8kgbi" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/17/来自母亲的信/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          来自母亲的信
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/11/Ubuntu14-04下Nvidia显卡驱动-Cuda-Caffe的配置流程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Ubuntu14.04下Nvidia显卡驱动 &amp; Cuda &amp; Caffe的配置流程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Image-Processing/">Image Processing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode-OJ/">LeetCode OJ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Object-Detection/">Object Detection</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Text-Editor/">Text Editor</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Languages/">Languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode-OJ/">LeetCode OJ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Projects/">Projects</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Softwares/">Softwares</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sources/">Sources</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂记/">杂记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Academic-Research/" style="font-size: 20px;">Academic Research</a> <a href="/tags/Algorithms/" style="font-size: 10px;">Algorithms</a> <a href="/tags/Languages/" style="font-size: 12.5px;">Languages</a> <a href="/tags/LeetCode-OJ/" style="font-size: 10px;">LeetCode OJ</a> <a href="/tags/Projects/" style="font-size: 10px;">Projects</a> <a href="/tags/Softwares/" style="font-size: 17.5px;">Softwares</a> <a href="/tags/Sources/" style="font-size: 15px;">Sources</a> <a href="/tags/杂记/" style="font-size: 15px;">杂记</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/19/Window-Data-Layer-in-Caffe/">Window Data Layer in Caffe</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/Vehicle-Detection-Tracking-with-some-auxiliary-functions/">Vehicle Detection, Tracking with some auxiliary functions</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/一段将来给我孩子的话/">一段将来给我孩子的话</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/19/新版caffe的MATLAB接口/">新版caffe的MATLAB接口</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/06/Git时如何解决出现：Commit-your-changes-or-stash-them-before-you-can-merge/">Git时如何解决出现：Commit your changes or stash them before you can merge</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget tag">
+<h3 class="title">Friends</h3>
+<ul class="entry">
+<li><a href="http://www.ee.cuhk.edu.hk/~yangli/" title="Li Hongyang">Hongyang Li</a></li>
+<li><a href="https://sites.google.com/site/jingjingwanghomepage/" title="Wang Jingjing">Jingjing Wang</a></li>
+<li><a href="http://ice.dlut.edu.cn/lu/index.html" title="Lu Huchuan">Huchuan Lu</a></li>
+<li><a href="http://faculty.ucmerced.edu/mhyang/" title="Yang Ming-Hsuan">Ming-Hsuan Yang</a></li>
+<li><a href="http://karpathy.github.io/" title="Andrej Karpathy">Andrej Karpathy</a></li>
+<li><a href="http://www.theclevercarrot.com/" title="The Clever Carrot">The Clever Carrot</a></li>
+</ul>
+</div>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Chi Zhizhen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/Publication" class="mobile-nav-link">Publication</a>
+  
+    <a href="/Project" class="mobile-nav-link">Project</a>
+  
+    <a href="/Misc" class="mobile-nav-link">Misc</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

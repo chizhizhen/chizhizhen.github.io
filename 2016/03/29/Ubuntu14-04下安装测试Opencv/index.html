@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Ubuntu14.04下安装测试Opencv | Zhizhen&#39;s Attic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1、安装必要的库
+
+GCC 4.4.x or later
+CMake 2.6 or higher">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu14.04下安装测试Opencv">
+<meta property="og:url" content="http://chizhizhen.github.io/2016/03/29/Ubuntu14-04下安装测试Opencv/index.html">
+<meta property="og:site_name" content="Zhizhen's Attic">
+<meta property="og:description" content="1、安装必要的库
+
+GCC 4.4.x or later
+CMake 2.6 or higher">
+<meta property="og:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/lena_opencv.jpg">
+<meta property="og:updated_time" content="2016-05-04T07:35:37.761Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu14.04下安装测试Opencv">
+<meta name="twitter:description" content="1、安装必要的库
+
+GCC 4.4.x or later
+CMake 2.6 or higher">
+<meta name="twitter:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/lena_opencv.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhizhen&#39;s Attic" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhizhen&#39;s Attic</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Many a little make a mickle!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/Publication">Publication</a>
+        
+          <a class="main-nav-link" href="/Project">Project</a>
+        
+          <a class="main-nav-link" href="/Misc">Misc</a>
+        
+          <a class="main-nav-link" href="/About">About</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://chizhizhen.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Ubuntu14-04下安装测试Opencv" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/29/Ubuntu14-04下安装测试Opencv/" class="article-date">
+  <time datetime="2016-03-29T11:24:14.000Z" itemprop="datePublished">2016-03-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Ubuntu/">Ubuntu</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ubuntu14.04下安装测试Opencv
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><font color="#8470FF">1、安装必要的库</font></p>
+<ul>
+<li>GCC 4.4.x or later</li>
+<li>CMake 2.6 or higher<a id="more"></a></li>
+<li>Git</li>
+<li>GTK+2.x or higher, including headers (libgtk2.0-dev)</li>
+<li>pkg-config</li>
+<li>Python 2.6 or later and Numpy 1.5 or later with developer packages (python-dev, python-numpy)</li>
+<li>ffmpeg or libav development packages: libavcodec-dev, libavformat-dev, libswscale-dev</li>
+<li>[optional] libtbb2 libtbb-dev</li>
+<li>[optional] libdc1394 2.x</li>
+<li>[optional] libjpeg-dev, libpng-dev, libtiff-dev, libjasper-dev, libdc1394-22-dev</li>
+</ul>
+<p>The packages can be installed using a terminal and the following commands or by using Synaptic Manager:</p>
+<p><font color="#FF00FF">[compiler]</font> sudo apt-get install build-essential</p>
+<p><font color="#FF00FF">[required]</font> sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev</p>
+<p><font color="#FF00FF">[optional]</font> sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev</p>
+<p><font color="#8470FF">2、安装Opencv</font><br>Launch Git client and clone <a href="https://github.com/itseez/opencv" target="_blank" rel="external">OpenCV repository</a>.<br>In Linux it can be achieved with the following command in Terminal:<br>cd ~/<my_working _directory=""><br>git clone <a href="https://github.com/Itseez/opencv.git" target="_blank" rel="external">https://github.com/Itseez/opencv.git</a></my_working></p>
+<p><font color="#8470FF">3、编译Opencv</font><br>cd ~/opencv<br>mkdir release<br>cd release<br>cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..<br>make<br>sudo make install</p>
+<p><font color="#8470FF">4、测试Opencv</font><br>1) 创建工作目录<br>mkdir ~/opencv-lena<br>cd ~/opencv-lena<br>gedit DisplayImage.cpp</p>
+<p>2) 编辑如下代码</p>
+<p>#include <stdio.h></stdio.h></p>
+<p>#include <opencv2 opencv.hpp=""></opencv2></p>
+<p>using namespace cv;</p>
+<p>int main(int argc, char** argv )<br>{<br>    if ( argc != 2 )<br>    {<br>        printf(“usage: DisplayImage.out <image_path>\n”);<br>        return -1;<br>    }</image_path></p>
+<pre><code>Mat image;
+image = imread( argv[1], 1 );
+
+if ( !image.data )
+{
+    printf(&quot;No image data \n&quot;);
+    return -1;
+}
+namedWindow(&quot;Display Image&quot;, WINDOW_AUTOSIZE );
+imshow(&quot;Display Image&quot;, image);
+
+waitKey(0);
+
+return 0;
+</code></pre><p>}</p>
+<p>3) 创建CMake编译文件<br>gedit CMakeLists.txt</p>
+<p>写入如下内容</p>
+<p>cmake_minimum_required(VERSION 2.8)<br>project( DisplayImage )<br>find_package( OpenCV REQUIRED )<br>add_executable( DisplayImage DisplayImage.cpp )<br>target_link_libraries( DisplayImage ${OpenCV_LIBS} )</p>
+<p>4) 编译<br>cd ~/opencv-lena<br>cmake .<br>make</p>
+<p>5) 执行<br>此时opencv-lena文件夹中已经产生了可执行文件DisplayImage，下载lena.jpg放在opencv-lena下，运行</p>
+<p>./DisplayImage lena.jpg<br><img src="http://7xqe1l.com1.z0.glb.clouddn.com/lena_opencv.jpg" alt="结果显示"></p>
+<p><font color="#8470FF">5、python下安装使用Opencv</font><br>可直接使用apt安装<br>sudo apt-get install python-opencv<br>sudo apt-get install python-numpy<br>测试:<br>打开python，import cv模块成功即可。</p>
+<p>import cv</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chizhizhen.github.io/2016/03/29/Ubuntu14-04下安装测试Opencv/" data-id="ciz681e2v0011qgfa5k305pr2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sources/">Sources</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/03/Ubuntu14-04安装TeXstudio/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Ubuntu14.04安装TeXstudio
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/25/Torch的安装与学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Torch的安装与学习</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Image-Processing/">Image Processing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode-OJ/">LeetCode OJ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Object-Detection/">Object Detection</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Text-Editor/">Text Editor</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Languages/">Languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode-OJ/">LeetCode OJ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Projects/">Projects</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Softwares/">Softwares</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sources/">Sources</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂记/">杂记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Academic-Research/" style="font-size: 20px;">Academic Research</a> <a href="/tags/Algorithms/" style="font-size: 10px;">Algorithms</a> <a href="/tags/Languages/" style="font-size: 12.5px;">Languages</a> <a href="/tags/LeetCode-OJ/" style="font-size: 10px;">LeetCode OJ</a> <a href="/tags/Projects/" style="font-size: 10px;">Projects</a> <a href="/tags/Softwares/" style="font-size: 17.5px;">Softwares</a> <a href="/tags/Sources/" style="font-size: 15px;">Sources</a> <a href="/tags/杂记/" style="font-size: 15px;">杂记</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/19/Window-Data-Layer-in-Caffe/">Window Data Layer in Caffe</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/Vehicle-Detection-Tracking-with-some-auxiliary-functions/">Vehicle Detection, Tracking with some auxiliary functions</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/一段将来给我孩子的话/">一段将来给我孩子的话</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/19/新版caffe的MATLAB接口/">新版caffe的MATLAB接口</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/06/Git时如何解决出现：Commit-your-changes-or-stash-them-before-you-can-merge/">Git时如何解决出现：Commit your changes or stash them before you can merge</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget tag">
+<h3 class="title">Friends</h3>
+<ul class="entry">
+<li><a href="http://www.ee.cuhk.edu.hk/~yangli/" title="Li Hongyang">Hongyang Li</a></li>
+<li><a href="https://sites.google.com/site/jingjingwanghomepage/" title="Wang Jingjing">Jingjing Wang</a></li>
+<li><a href="http://ice.dlut.edu.cn/lu/index.html" title="Lu Huchuan">Huchuan Lu</a></li>
+<li><a href="http://faculty.ucmerced.edu/mhyang/" title="Yang Ming-Hsuan">Ming-Hsuan Yang</a></li>
+<li><a href="http://karpathy.github.io/" title="Andrej Karpathy">Andrej Karpathy</a></li>
+<li><a href="http://www.theclevercarrot.com/" title="The Clever Carrot">The Clever Carrot</a></li>
+</ul>
+</div>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Chi Zhizhen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/Publication" class="mobile-nav-link">Publication</a>
+  
+    <a href="/Project" class="mobile-nav-link">Project</a>
+  
+    <a href="/Misc" class="mobile-nav-link">Misc</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

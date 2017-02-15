@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Python os.path 模块 | Zhizhen&#39;s Attic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1、os.path模块
+
+
+
+basename(‘文件路径’)，去掉目录路径，返回文件名import osos.path.basename(‘/Volumes/1.mp4’)   #输出(‘1.mp4’)
+dirname(‘文件路径’)    去掉文件名，返回目录路径import osos.path.dirname(‘/Volumes/1.mp4’)   #输出(‘/Volumes’)
+os.p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python os.path 模块">
+<meta property="og:url" content="http://chizhizhen.github.io/2016/05/06/Python-os-path-模块/index.html">
+<meta property="og:site_name" content="Zhizhen's Attic">
+<meta property="og:description" content="1、os.path模块
+
+
+
+basename(‘文件路径’)，去掉目录路径，返回文件名import osos.path.basename(‘/Volumes/1.mp4’)   #输出(‘1.mp4’)
+dirname(‘文件路径’)    去掉文件名，返回目录路径import osos.path.dirname(‘/Volumes/1.mp4’)   #输出(‘/Volumes’)
+os.p">
+<meta property="og:updated_time" content="2016-05-09T00:10:35.018Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python os.path 模块">
+<meta name="twitter:description" content="1、os.path模块
+
+
+
+basename(‘文件路径’)，去掉目录路径，返回文件名import osos.path.basename(‘/Volumes/1.mp4’)   #输出(‘1.mp4’)
+dirname(‘文件路径’)    去掉文件名，返回目录路径import osos.path.dirname(‘/Volumes/1.mp4’)   #输出(‘/Volumes’)
+os.p">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhizhen&#39;s Attic" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhizhen&#39;s Attic</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Many a little make a mickle!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/Publication">Publication</a>
+        
+          <a class="main-nav-link" href="/Project">Project</a>
+        
+          <a class="main-nav-link" href="/Misc">Misc</a>
+        
+          <a class="main-nav-link" href="/About">About</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://chizhizhen.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Python-os-path-模块" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/06/Python-os-path-模块/" class="article-date">
+  <time datetime="2016-05-06T14:13:51.000Z" itemprop="datePublished">2016-05-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python os.path 模块
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><font color="#8470FF">1、os.path模块</font>
+
+</li>
+</ul>
+<h4 id="basename-‘文件路径’-，去掉目录路径，返回文件名"><a href="#basename-‘文件路径’-，去掉目录路径，返回文件名" class="headerlink" title="basename(‘文件路径’)，去掉目录路径，返回文件名"></a>basename(‘文件路径’)，去掉目录路径，返回文件名</h4><p>import os<br>os.path.basename(‘/Volumes/1.mp4’)   #输出(‘1.mp4’)</p>
+<h4 id="dirname-‘文件路径’-去掉文件名，返回目录路径"><a href="#dirname-‘文件路径’-去掉文件名，返回目录路径" class="headerlink" title="dirname(‘文件路径’)    去掉文件名，返回目录路径"></a>dirname(‘文件路径’)    去掉文件名，返回目录路径</h4><p>import os<br>os.path.dirname(‘/Volumes/1.mp4’)   #输出(‘/Volumes’)</p>
+<h4 id="os-path-split-‘文件路径’-分割文件名与路径；返回（fpath，fname）元组；如果完全使用目录，它也会将最后一个目录作为文件名分离，且不会判断文件或者目录是否存在"><a href="#os-path-split-‘文件路径’-分割文件名与路径；返回（fpath，fname）元组；如果完全使用目录，它也会将最后一个目录作为文件名分离，且不会判断文件或者目录是否存在" class="headerlink" title="os.path.split(‘文件路径’)    分割文件名与路径；返回（fpath，fname）元组；如果完全使用目录，它也会将最后一个目录作为文件名分离，且不会判断文件或者目录是否存在"></a>os.path.split(‘文件路径’)    分割文件名与路径；返回（fpath，fname）元组；如果完全使用目录，它也会将最后一个目录作为文件名分离，且不会判断文件或者目录是否存在</h4><p>import os<br>os.path.split(‘/Volumes/1.mp4’)    #输出（‘/Volumes’，‘1.mp4’）<br>os.path.split(‘/Volumes/text’)     #输出（‘/Volumes’，‘text’）</p>
+<h4 id="os-path-splitext-‘文件名称’-分割文件名与文件格式；返回（fname，format）元组；"><a href="#os-path-splitext-‘文件名称’-分割文件名与文件格式；返回（fname，format）元组；" class="headerlink" title="os.path.splitext(‘文件名称’)    分割文件名与文件格式；返回（fname，format）元组；"></a>os.path.splitext(‘文件名称’)    分割文件名与文件格式；返回（fname，format）元组；</h4><p>import os<br>os.path.split(‘1.mp4’)    #输出（‘’，‘1.mp4’）<br>os.path.splitext(‘dog.jpg’)     #输出（‘dog’，‘.jpg’）<br>os.path.splitext(‘/folder/dog.jpg’)     #输出（‘/folder/dog’，‘.jpg’）</p>
+<h4 id="os-path-join-‘a’-’b’-’fname-extension’-gt-’a-b-fname-extension’-将分离的部分组成一个路径名"><a href="#os-path-join-‘a’-’b’-’fname-extension’-gt-’a-b-fname-extension’-将分离的部分组成一个路径名" class="headerlink" title="os.path.join(‘a’,’b’,’fname.extension’)-&gt;’a/b/fname.extension’  将分离的部分组成一个路径名"></a>os.path.join(‘a’,’b’,’fname.extension’)-&gt;’a/b/fname.extension’  将分离的部分组成一个路径名</h4><p>import os<br>os.path.join(‘a’,’b’,’1.mp4’)  #输出#‘a/b/1.mp4’</p>
+<h4 id="os-getcwd-在Python中可以使用os-getcwd-函数获得当前的路径。"><a href="#os-getcwd-在Python中可以使用os-getcwd-函数获得当前的路径。" class="headerlink" title="os.getcwd()   # 在Python中可以使用os.getcwd()函数获得当前的路径。"></a>os.getcwd()   # 在Python中可以使用os.getcwd()函数获得当前的路径。</h4><p>import os<br>print ‘current directory is ‘,os.getcwd()</p>
+<h4 id="os-listdir-使用os-listdir-函数获得指定目录中的内容"><a href="#os-listdir-使用os-listdir-函数获得指定目录中的内容" class="headerlink" title="os.listdir()  使用os.listdir()函数获得指定目录中的内容"></a>os.listdir()  使用os.listdir()函数获得指定目录中的内容</h4><p>import os<br>os.listdir(os.getcwd())         # 获得当前目录中的内容<br>[‘dde.pyd’, ‘license.txt’, ‘Pythonwin.exe’, ‘scintilla.dll’, ‘win32ui.pyd’, ‘win32uiole.pyd’, ‘pywin’]</p>
+<p>os.mkdir()  创建目录<br>os.rmdir()  删除目录<br>os.isdir()  判断是否为目录<br>os.isfile() 判断是否为文件</p>
+<ul>
+<li><font color="#8470FF">2、查询：返回值True，False</font>
+
+</li>
+</ul>
+<p>exists()    指定路径（文件或者目录）是否存在<br>isabs()    指定路径是否为绝对路径<br>isdir()    指定路径是否存在且为一个目录<br>isfile()    指定路径是否存在且为一个文件<br>islink()    指定路径是否存在且为一个符号链接<br>samefile()    两个路径名是否指向同一个文件</p>
+<ul>
+<li><font color="#8470FF">3、文件信息</font>
+
+</li>
+</ul>
+<p>import time<br>import os</p>
+<p>getatime()    返回最近访问时间  （浮点型秒数）<br>getctime()    返回文件创建时间<br>getmtime()    返回最近文件修改时间<br>getsize()    返回文件大小 （字节为单位）<br>abspath()    返回绝对路径</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chizhizhen.github.io/2016/05/06/Python-os-path-模块/" data-id="ciz681e20000mqgfaanvbuh23" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Languages/">Languages</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/06/Git时如何解决出现：Commit-your-changes-or-stash-them-before-you-can-merge/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Git时如何解决出现：Commit your changes or stash them before you can merge
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/03/Ubuntu14-04安装TeXstudio/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Ubuntu14.04安装TeXstudio</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Image-Processing/">Image Processing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode-OJ/">LeetCode OJ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Object-Detection/">Object Detection</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Text-Editor/">Text Editor</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Languages/">Languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode-OJ/">LeetCode OJ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Projects/">Projects</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Softwares/">Softwares</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sources/">Sources</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂记/">杂记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Academic-Research/" style="font-size: 20px;">Academic Research</a> <a href="/tags/Algorithms/" style="font-size: 10px;">Algorithms</a> <a href="/tags/Languages/" style="font-size: 12.5px;">Languages</a> <a href="/tags/LeetCode-OJ/" style="font-size: 10px;">LeetCode OJ</a> <a href="/tags/Projects/" style="font-size: 10px;">Projects</a> <a href="/tags/Softwares/" style="font-size: 17.5px;">Softwares</a> <a href="/tags/Sources/" style="font-size: 15px;">Sources</a> <a href="/tags/杂记/" style="font-size: 15px;">杂记</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/19/Window-Data-Layer-in-Caffe/">Window Data Layer in Caffe</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/Vehicle-Detection-Tracking-with-some-auxiliary-functions/">Vehicle Detection, Tracking with some auxiliary functions</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/一段将来给我孩子的话/">一段将来给我孩子的话</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/19/新版caffe的MATLAB接口/">新版caffe的MATLAB接口</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/06/Git时如何解决出现：Commit-your-changes-or-stash-them-before-you-can-merge/">Git时如何解决出现：Commit your changes or stash them before you can merge</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget tag">
+<h3 class="title">Friends</h3>
+<ul class="entry">
+<li><a href="http://www.ee.cuhk.edu.hk/~yangli/" title="Li Hongyang">Hongyang Li</a></li>
+<li><a href="https://sites.google.com/site/jingjingwanghomepage/" title="Wang Jingjing">Jingjing Wang</a></li>
+<li><a href="http://ice.dlut.edu.cn/lu/index.html" title="Lu Huchuan">Huchuan Lu</a></li>
+<li><a href="http://faculty.ucmerced.edu/mhyang/" title="Yang Ming-Hsuan">Ming-Hsuan Yang</a></li>
+<li><a href="http://karpathy.github.io/" title="Andrej Karpathy">Andrej Karpathy</a></li>
+<li><a href="http://www.theclevercarrot.com/" title="The Clever Carrot">The Clever Carrot</a></li>
+</ul>
+</div>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Chi Zhizhen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/Publication" class="mobile-nav-link">Publication</a>
+  
+    <a href="/Project" class="mobile-nav-link">Project</a>
+  
+    <a href="/Misc" class="mobile-nav-link">Misc</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

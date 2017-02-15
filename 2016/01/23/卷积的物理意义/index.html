@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>卷积的物理意义 | Zhizhen&#39;s Attic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="故事是从某晚室友畅仔发给我下面这张图想到的，为什么海绵宝宝和派大星是好“基友”？当时一看到就明白了，这不就是时域频域的傅里叶变换图么？后来爬上床躺下的时候就在想，当时卷积运算引入傅里叶变换中，卷积这种运算是怎么被人们想出来的？于是陷入了深深的思考……">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卷积的物理意义">
+<meta property="og:url" content="http://chizhizhen.github.io/2016/01/23/卷积的物理意义/index.html">
+<meta property="og:site_name" content="Zhizhen's Attic">
+<meta property="og:description" content="故事是从某晚室友畅仔发给我下面这张图想到的，为什么海绵宝宝和派大星是好“基友”？当时一看到就明白了，这不就是时域频域的傅里叶变换图么？后来爬上床躺下的时候就在想，当时卷积运算引入傅里叶变换中，卷积这种运算是怎么被人们想出来的？于是陷入了深深的思考……">
+<meta property="og:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/haimianbaobao.png">
+<meta property="og:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/economy1.jpg">
+<meta property="og:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/economy2.jpg">
+<meta property="og:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/economy3.jpg">
+<meta property="og:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/economy4.jpg">
+<meta property="og:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/fourier_series.png">
+<meta property="og:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/frequency_domain.png">
+<meta property="og:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/times_frequency.png">
+<meta property="og:updated_time" content="2016-01-28T01:44:48.406Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="卷积的物理意义">
+<meta name="twitter:description" content="故事是从某晚室友畅仔发给我下面这张图想到的，为什么海绵宝宝和派大星是好“基友”？当时一看到就明白了，这不就是时域频域的傅里叶变换图么？后来爬上床躺下的时候就在想，当时卷积运算引入傅里叶变换中，卷积这种运算是怎么被人们想出来的？于是陷入了深深的思考……">
+<meta name="twitter:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/haimianbaobao.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhizhen&#39;s Attic" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhizhen&#39;s Attic</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Many a little make a mickle!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/Publication">Publication</a>
+        
+          <a class="main-nav-link" href="/Project">Project</a>
+        
+          <a class="main-nav-link" href="/Misc">Misc</a>
+        
+          <a class="main-nav-link" href="/About">About</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://chizhizhen.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-卷积的物理意义" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/23/卷积的物理意义/" class="article-date">
+  <time datetime="2016-01-23T11:41:33.000Z" itemprop="datePublished">2016-01-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Image-Processing/">Image Processing</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      卷积的物理意义
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>故事是从某晚室友畅仔发给我下面这张图想到的，为什么海绵宝宝和派大星是好“基友”？<br><img src="http://7xqe1l.com1.z0.glb.clouddn.com/haimianbaobao.png" alt="海绵宝宝与派大星"><br>当时一看到就明白了，这不就是时域频域的傅里叶变换图么？后来爬上床躺下的时候就在想，当时卷积运算引入傅里叶变换中，卷积这种运算是怎么被人们想出来的？于是陷入了深深的思考……<br><a id="more"></a></p>
+<ul>
+<li>信号与系统</li>
+</ul>
+<p>傅里叶变换起源于信号系统理论，但在数理统计、经济学、物理学得以发扬光大。(插一句，其实当年傅里叶也不是搞信号处理的，好像是搞什么热力学传导的。。)<br>回顾一下大三必修课《信号与系统》里是怎么讲解傅里叶变换的。假设B是一个系统，其$t$时刻的输入为$x(t)$，输出为$y(t)$，系统的响应函数为$h(t)$，则系统输入输出可记作：$y(t)=x(t)h(t)$，然而，实际的情况是，系统的输出不仅与系统在t时刻的响应有关，还与它在t时刻之前的响应有关，不过系统有个衰减过程，所以$(t-1)$时刻输入对输出的影响可以记成$y(t)=x(t)h(t-1)$，这个过程可能是离散的，也可能是连续的，所以t时刻的输出应该为t时刻之前系统响应函数在各个时刻响应的叠加，这就是卷积，用数学公式表示就是$y(s)=\int x(t)h(s-t)dt$，离散情况下就是级数了。这种积分是在时域进行的，傅里叶变换就是将其转化到频域进行计算：$Y(U)=X(U)H(U)$，其中$Y,X,H$ 是 $y(t),x(t),h(t)$的傅里叶变换。</p>
+<ul>
+<li>经济解释</li>
+</ul>
+<p>对于初学者用<strong>复利</strong>的例子来解释卷积，小明存入100元钱，年利率是5%，按复利计算（即将每一年所获利息加入本金，以计算下一年的利息），那么在五年之后他能拿到的钱数是$100(1+5\%)^5$，如下表所示：<br><img src="http://7xqe1l.com1.z0.glb.clouddn.com/economy1.jpg" alt=""></p>
+<p>将这笔钱存入银行的一年之后，小明又往银行中存入了100元钱，年利率仍为5%，那么这笔钱按复利计算，到了第五年，将收回的钱数是$100(1+5\%)^4$，我们将这一结果作为新的一行加入上面的表格中：<br><img src="http://7xqe1l.com1.z0.glb.clouddn.com/economy2.jpg" alt=""></p>
+<p>以此类推，如果小明每年都往银行中存入新的100元钱，那么这个收益表格将是这样的：<br><img src="http://7xqe1l.com1.z0.glb.clouddn.com/economy3.jpg" alt=""></p>
+<p>可见，最终小明拿到的钱将等于他各年存入的钱分别计算复利之后得到的钱数的总和，即：<br><img src="http://7xqe1l.com1.z0.glb.clouddn.com/economy4.jpg" alt=""></p>
+<p>用求和符号来简化这个公式，可以得到：<br>$\sum{_{i=0}^5}f(i)g(5-i)$, where $f(i)=100, g(5-i)=(1.05)^{5-i}$</p>
+<p>在上式中，$f(i)$为小明的存钱函数，$g(i)$而为存入银行的每一笔钱的复利计算函数。<strong>在这里，小明最终得到的钱就是他的存钱函数和复利计算函数的卷积。</strong></p>
+<p>为了更清晰地看到这一点，我们将这个公式推广到连续的情况，也就是说，小明在从0到t这一段时间内，每时每刻都往银行里存钱，他的存钱函数为$f(\tau)(0&lt;{\tau}&lt;t)$，而银行也对他存入的每一笔钱按复利公式计算收益：$g(t-\tau)=(1+5\%)^{t-\tau}$，则小明到时间t将得到的总钱数为：<br>$\int_0^t f(\tau)g(t-\tau)d{\tau} = \int_0^t f(\tau)(1+5\%)^{t-\tau}d{\tau}$<br>这就是卷积公式的表达式了，上式可以记为$(f*g)(t)$</p>
+<p>于是就可以展开来说，也就是课本里晦涩难懂的教条：</p>
+<p>如果我们将小明的存款函数视为一个<strong>信号发生（也就是激励）</strong>的过程，而将复利函数视为一个系统对信号的<strong>响应函数</strong>（也就是响应），那么二者的卷积就可以看做是在时刻对系统进行观察，得到的<strong>观察结果（也就是输出）</strong>将是过去产生的所有信号经过系统的「处理／响应」后得到的结果的<strong>叠加</strong>，这也就是<strong>卷积的物理意义</strong>了。</p>
+<ul>
+<li>数理统计解释</li>
+</ul>
+<p>举个栗子有图有真相。<br><img src="http://7xqe1l.com1.z0.glb.clouddn.com/fourier_series.png" alt=""><br>第一幅图是一个郁闷的正弦波 cos（x）<br>第二幅图是 2 个卖萌的正弦波的叠加 cos(x)+a.cos(3x)<br>第三幅图是 4 个发春的正弦波的叠加<br>第四幅图是 10 个便秘的正弦波的叠加<br>有趣的是，无数个正弦波的叠加可以构成一个标准90度的矩形波。</p>
+<p>正弦波就是一个圆周运动在一条直线上的投影。所以频域的基本单元也可以理解为一个始终在旋转的圆，<br>以下分别是方波和锯齿波的傅里叶技术变换图：<br><a href="https://en.wikipedia.org/wiki/File:Fourier_series_square_wave_circles_animation.gif" target="_blank" rel="external">File:Fourier series square wave circles animation.gif</a><br><a href="https://en.wikipedia.org/wiki/File:Fourier_series_sawtooth_wave_circles_animation.gif" target="_blank" rel="external">File:Fourier series sawtooth wave circles animation.gif</a><br>以上是在时域的表现情况，下面我们看一下在傅里叶频域分析：<br><img src="http://7xqe1l.com1.z0.glb.clouddn.com/frequency_domain.png" alt=""><br>这就是矩形波在频域的样子，再清楚点说，<br><img src="http://7xqe1l.com1.z0.glb.clouddn.com/times_frequency.png" alt=""><br>那么这个东西到底有何用处呢？答案是用途实在太广泛了，<strong>MP3、JPEG 和 Siri</strong> 背后的秘密都在于此。</p>
+<p>总的来说，傅里叶变换告诉你，在一个整体的波形中，每一个单独的“音符”（正弦曲线或是圆圈）的比例。这就是傅里叶变换如此有用的原因。想象一下，你正在和你的朋友通电话，同时你想让他们能够画出近似方形的波形。复杂的方式是读出一长串的数字，每个数字表示了相应时间点上波形的高度。有了这些数字，你的朋友可以耐心地绘制出原始波形。这就是<strong>原始的音频格式比如WAV的基本原理</strong>。但是，如果你的朋友知道傅里叶变换，那么你可以更加聪明地完成这个工作：你只要告诉他们少量数字——上图中提到的不同的圆的尺寸。他们可以用这些圆来重建原始波形。</p>
+<p>这不仅仅是数学花招。傅里叶变换出现在几乎所有存在波形的地方。无处不在的MP3格式使用一种变形的傅里叶变换来达到相比之前的WAV（读作“wave”）更大的压缩率。对于每个音频片段，傅里叶变换将音频波形分解为它的成分音符并且保存下来，从而代替存储原始波形。傅里叶变换还可以告诉你在一首歌中每个音符所占的比例，你可以知道哪些音符是这首歌的基本元素。音调很高的音符并不重要（我们的耳朵几乎不能听见），因此，MP3格式放弃保存这些音符，从而取得了更高的数据压缩率。这正是高保真音响爱好者不喜欢MP3格式的原因——它不是一种无损的音频格式，高保真爱好者表示他们可以听出其中的差别。</p>
+<p>这也是智能手机的应用程序Shazam怎样识别一首歌的原理。它将音乐分割成块，利用傅里叶变换算出每一块中的音符成分。然后它搜索数据库，来寻找这样的“音符指纹”与他们已有文件中的一首歌相匹配。语音识别同样使用“傅里叶——指纹”的思想，将你的声音与已知单词列表进行比较。</p>
+<p>你也可以在图像上利用傅里叶变换。有一个极好的视频来说明你怎么利用圆圈来绘制辛普森的脸。在线百科全书Wolfram Alpha采用了相似的理念来绘制名人头像。听起来，这似乎可以存下来用于一个恶搞的鸡尾酒会，但是，这种方法也用于将图像压缩为JPEG文件。在以前的微软绘图中，图像是用位图（BMP）存放的，这种文件包含了一长串的数字，代表对每个像素点的颜色编码。JPEG格式就相当于图像格式中的MP3格式。建立一个JPEG文件，你首先将图片分割为很小的块，每块都是8像素*8像素。对于每个像素块，你可以用与重建辛普森的脸相同的画圆的办法来重建局部图像。正如MP3放弃保存高音一样，JPEG不保存极小的圆。这样做的结果是：牺牲了小部分的画面质量，来取得文件大小的巨大压缩。这样的理念，使得我们都喜欢的可视化网络世界成为可能（同时最终让我们得到了GIF格式）。</p>
+<ul>
+<li>物理解释<br>blablabla…</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chizhizhen.github.io/2016/01/23/卷积的物理意义/" data-id="ciz681e4k001xqgfacu5963wc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/25/BLAS、ATLAS、LAPACK/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          BLAS、ATLAS、LAPACK
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/23/风陵渡口初相遇，一见杨过误终身/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">风陵渡口初相遇，一见杨过误终身</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Image-Processing/">Image Processing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode-OJ/">LeetCode OJ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Object-Detection/">Object Detection</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Text-Editor/">Text Editor</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Languages/">Languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode-OJ/">LeetCode OJ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Projects/">Projects</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Softwares/">Softwares</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sources/">Sources</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂记/">杂记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Academic-Research/" style="font-size: 20px;">Academic Research</a> <a href="/tags/Algorithms/" style="font-size: 10px;">Algorithms</a> <a href="/tags/Languages/" style="font-size: 12.5px;">Languages</a> <a href="/tags/LeetCode-OJ/" style="font-size: 10px;">LeetCode OJ</a> <a href="/tags/Projects/" style="font-size: 10px;">Projects</a> <a href="/tags/Softwares/" style="font-size: 17.5px;">Softwares</a> <a href="/tags/Sources/" style="font-size: 15px;">Sources</a> <a href="/tags/杂记/" style="font-size: 15px;">杂记</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/19/Window-Data-Layer-in-Caffe/">Window Data Layer in Caffe</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/Vehicle-Detection-Tracking-with-some-auxiliary-functions/">Vehicle Detection, Tracking with some auxiliary functions</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/一段将来给我孩子的话/">一段将来给我孩子的话</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/19/新版caffe的MATLAB接口/">新版caffe的MATLAB接口</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/06/Git时如何解决出现：Commit-your-changes-or-stash-them-before-you-can-merge/">Git时如何解决出现：Commit your changes or stash them before you can merge</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget tag">
+<h3 class="title">Friends</h3>
+<ul class="entry">
+<li><a href="http://www.ee.cuhk.edu.hk/~yangli/" title="Li Hongyang">Hongyang Li</a></li>
+<li><a href="https://sites.google.com/site/jingjingwanghomepage/" title="Wang Jingjing">Jingjing Wang</a></li>
+<li><a href="http://ice.dlut.edu.cn/lu/index.html" title="Lu Huchuan">Huchuan Lu</a></li>
+<li><a href="http://faculty.ucmerced.edu/mhyang/" title="Yang Ming-Hsuan">Ming-Hsuan Yang</a></li>
+<li><a href="http://karpathy.github.io/" title="Andrej Karpathy">Andrej Karpathy</a></li>
+<li><a href="http://www.theclevercarrot.com/" title="The Clever Carrot">The Clever Carrot</a></li>
+</ul>
+</div>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Chi Zhizhen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/Publication" class="mobile-nav-link">Publication</a>
+  
+    <a href="/Project" class="mobile-nav-link">Project</a>
+  
+    <a href="/Misc" class="mobile-nav-link">Misc</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

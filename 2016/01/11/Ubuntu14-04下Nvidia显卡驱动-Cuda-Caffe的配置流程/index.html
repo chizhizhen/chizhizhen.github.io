@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Ubuntu14.04下Nvidia显卡驱动 &amp; Cuda &amp; Caffe的配置流程 | Zhizhen&#39;s Attic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="首先，要感谢当年在IIAU实验室工作过的李弘扬同学，正是得益于他的热心帮助，才诞生了本篇博文。本人电脑配置是8核32G内存，2*Titan X，4T硬盘，经实测，流程绝对真实可靠。
+
+Windows &amp;amp; Ubuntu1.在Windows下创建分区，留出足够的空间给Ubuntu；2.做好U盘启动，直接安装，划分磁盘时一定要仔细，主要是swap、/home、/、/boot、这几部分，管理好每部">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu14.04下Nvidia显卡驱动 & Cuda & Caffe的配置流程">
+<meta property="og:url" content="http://chizhizhen.github.io/2016/01/11/Ubuntu14-04下Nvidia显卡驱动-Cuda-Caffe的配置流程/index.html">
+<meta property="og:site_name" content="Zhizhen's Attic">
+<meta property="og:description" content="首先，要感谢当年在IIAU实验室工作过的李弘扬同学，正是得益于他的热心帮助，才诞生了本篇博文。本人电脑配置是8核32G内存，2*Titan X，4T硬盘，经实测，流程绝对真实可靠。
+
+Windows &amp;amp; Ubuntu1.在Windows下创建分区，留出足够的空间给Ubuntu；2.做好U盘启动，直接安装，划分磁盘时一定要仔细，主要是swap、/home、/、/boot、这几部分，管理好每部">
+<meta property="og:updated_time" content="2016-05-09T08:17:18.033Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu14.04下Nvidia显卡驱动 & Cuda & Caffe的配置流程">
+<meta name="twitter:description" content="首先，要感谢当年在IIAU实验室工作过的李弘扬同学，正是得益于他的热心帮助，才诞生了本篇博文。本人电脑配置是8核32G内存，2*Titan X，4T硬盘，经实测，流程绝对真实可靠。
+
+Windows &amp;amp; Ubuntu1.在Windows下创建分区，留出足够的空间给Ubuntu；2.做好U盘启动，直接安装，划分磁盘时一定要仔细，主要是swap、/home、/、/boot、这几部分，管理好每部">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhizhen&#39;s Attic" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhizhen&#39;s Attic</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Many a little make a mickle!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/Publication">Publication</a>
+        
+          <a class="main-nav-link" href="/Project">Project</a>
+        
+          <a class="main-nav-link" href="/Misc">Misc</a>
+        
+          <a class="main-nav-link" href="/About">About</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://chizhizhen.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Ubuntu14-04下Nvidia显卡驱动-Cuda-Caffe的配置流程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/11/Ubuntu14-04下Nvidia显卡驱动-Cuda-Caffe的配置流程/" class="article-date">
+  <time datetime="2016-01-11T12:41:17.000Z" itemprop="datePublished">2016-01-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Deep-Learning/">Deep Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ubuntu14.04下Nvidia显卡驱动 &amp; Cuda &amp; Caffe的配置流程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>首先，要感谢当年在<a href="http://ice.dlut.edu.cn/lu/index.html" target="_blank" rel="external">IIAU</a>实验室工作过的<a href="http://www.ee.cuhk.edu.hk/~yangli/" target="_blank" rel="external">李弘扬</a>同学，正是得益于他的热心帮助，才诞生了本篇博文。<br>本人电脑配置是8核32G内存，2*Titan X，4T硬盘，经实测，流程绝对真实可靠。</p>
+<ul>
+<li><p>Windows &amp; Ubuntu<br>1.在Windows下创建分区，留出足够的空间给Ubuntu；<br>2.做好U盘启动，直接安装，划分磁盘时一定要仔细，主要是swap、/home、/、/boot、这几部分，管理好每部分要分配的空间；系统安装成功后最好update和upgrade所有软件或驱动，建议日后不再随意更新；<br>3.设置浏览器(建议Chrome)、邮件(thunderbird)、gtalk(empathy)、输入法(ibus pinyin，现在可以安装sougou pinyin了)、sublime或者vim的配置还有Synergy等一系列基础软件。</p>
+</li>
+<li><p>Nvidia Driver &amp; Cuda<br>1.去官网<a href="http://nvidia.com" target="_blank" rel="external">http://nvidia.com</a>下载对应显卡型号的驱动，cuda驱动程序还有对应的cudnn；<br>2.安装必要的库，为samples显示做准备 (Mac就没有这一步…,所以openMP, MPI)<br>sudo apt-get install freeglut3-dev build-essential libx11-dev libxmu-dev libxi-dev  libglu1-mesa libglu1-mesa-dev libgl (这是字母l) 1-mesa-glx</p>
+<a id="more"></a>
+<p>3.禁止开机驱动Nouveau<br>禁止开源驱动nouveau的开机加载<br>1) sudo vim /etc/modprobe.d/blacklist.conf (或者直接用gedit编辑.conf内的内容)<br>在文件后添加如下内容保存后，重启<br>2) blacklist nouveau<br>3) options nouveau modeset=0<br>其实在装driver时，会显示失败，同时生成上述文件。<br>4.进入tty1 (Ctrl+Alt+F1), as root<br>1) sudo passwd root<br> su (执行su以root身份进行操作)<br>2) service lightdm stop（关闭图形界面Ctrl+Alt+F7）<br> sh [驱动文件.run]<br> 第一步pre-installed 应该是fail, 剩下的点击ok基本上就行。<br>3) sh [cuda.run]<br>有一堆提示选项，自己小心哦，这里是小重点。<br>4) service lightdm start<br>5.修改环境变量，和mac相同，除了~/.bashrc,<br> sudo vim ~/.bashrc<br> export PATH=/usr/local/cuda-7.5/bin:$PATH<br> export LD_LIBRARY_PATH=/usr/local/cuda-7.5/lib64:$LD_LIBRARY_PATH<br> sudo source ~/.bashrc<br> 查看环境变量：<br> echo $PATH<br>6.在以上步骤完成之后<br>sudo vim /etc/ld.so.conf<br>添加如下内容：/usr/local/cuda-7.5/lib64<br>完成之后执行：sudo ldconfig<br>验证是否添加路径成功：ldconfig -v|grep cuda<br>7.设置完环境变量后，进入samples, sudo make所有结果。(时间略长…)<br>进入bin, 测试部分结果。<br>8.下载cuDNN, 把头文件.h安装到cuda的include子目录, 剩下的库文件(4个，其中两个是链接，到lib64)。<br>配置caffe时，设置use_cudnn = 1, 即可。</p>
+</li>
+<li><p>Caffe<br>1.安装BLAS，(三种方式，参见Cuda, Caffe, R-CNN)<br>sudo apt-get install libatlas-base-dev<br>2.安装依赖项，(这一步实在非常赞！Mac 真是麻烦了好多，当然如果能上code.google就简单了):<br>sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libboost-all-dev libhdf5-serial-dev<br>sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler<br>3.直接编译即可，应该没什么问题<br>cp Makefile.config.example Makefile.config<br>#Adjust Makefile.config (for example, if using Anaconda Python)<br>sudo make all -j8(-j8表示8核CPU全部调用，查看System Monitor可看到效果)<br>sudo make test -j8<br>sudo make runtest -j8<br>最终可能会有两处没有测试，但不影响caffe正常使用。<br>#<br>make clean（将之前MAKE结果全部去除）<br>sudo make all &amp;&amp; test（执行两部）<br>#<br>+matlab wrapper<br>sudo make matcaffe</p>
+</li>
+<li><p>Ubuntu下MATLAB安装<br>1.建立挂载<br>sudo mkdir /home/zhizhen/Desktop/temp<br>sudo mount -o loop [iso文件位置] [/home/zhizhen/Desktop/temp]<br>2.进入temp文件夹<br>ls -a 之后，直接./install (序列号在 /serial/Readme.txt里)<br>/usr/local/MATLAB/R2013a文件夹需要创建<br>先改/usr/local文件夹限制：sudo chmod 777 /usr/local/<br>然后创建文件夹：sudo mkdir /usr/local/MATLAB/R2013a<br>激活码在 /serial/license.lic<br>3.去挂载<br>sudo umnout [/home/zhizhen/Desktop/temp]</p>
+</li>
+<li><p>MATLAB在Ubuntu上中文无法显示的问题<br>由于Linux下Matlab的图形界面是用Java写的，所以只要搞定Java的中文显示就行了。<br>1.我的Matlab2013a的JRE目录为：/usr/local/MATLAB/R2013a/sys/java/jre/glnxa64/jre/lib/fonts，请根据自己的安装目录和版本确定JRE的目录；<br>2.$ cd /usr/local/MATLAB/R2013a/sys/java/jre/glnxa64/jre/lib/fonts；<br>3.建立目录fallback: $ mkdir fallback；<br>4.把字体复制或链接到fallback目录：<br>$ cp /media/zhizhen/system/Windows/Fonts/simsun.ttc fallback/，我用的是Windows下的simsun字体，你也可以用别的支持中文的字体；<br>5.进入fallback目录，执行 mkfontscale 命令；<br>(6-8步其实不必要)<br>6.将上一步生成的文件添加到 lib/fonts/fonts.dir文件中，可用以下命令完成，当然也可以用编辑器复制粘贴：<br>$ cat fallback/fonts.scale &gt;&gt; fonts.dir (注意fonts.dir应该设为可写)<br>7.至此Matlab的Java环境中文支持安装完了，接下来配置Matlab;<br>8.进入Matlab，选择 菜单 File&gt;&gt;Preferences&gt;&gt;Fonts 选择SimSun字体就行了；<br>9.如果没有相应的（我的是SimSun）字体，请把fallback下的字体加上可读属性：$ chmod a+r fallback/* 这一步需要进行，而且必须在Fonts文件夹(fallback前一级)下执行</p>
+</li>
+<li><p>在实验室装Ubuntu时遇到的问题<br>1.装ubuntu的时候一定要选择other ways，不然把windows擦除，实在是太low= =！<br>2.重装windows系统时候选择了win8，两个drive 0/1，各自2T, 在其中之一上创建C盘主分区安装系统；<br>在剩下的磁盘空间上分盘，创建逻辑分区，注意：磁盘原始是GPT格式的，只能创建主分区，不能建逻辑分区，这时下载分区助手，将GPT转化为MBR格式，此时可以创建逻辑分区；<br>安装ubuntu一定要手动分配swap，boot，home，usr/local的空间，在开始时free space上进行；<br>free space是逻辑分区，ubuntu必须装载在ext4这种磁盘格式上；</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chizhizhen.github.io/2016/01/11/Ubuntu14-04下Nvidia显卡驱动-Cuda-Caffe的配置流程/" data-id="ciz681e2g000uqgfa9rxydnb9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/16/RCNN/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          RCNN:Regions with Convolutional Neural Network Features
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/04/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Image-Processing/">Image Processing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode-OJ/">LeetCode OJ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Object-Detection/">Object Detection</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Text-Editor/">Text Editor</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Languages/">Languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode-OJ/">LeetCode OJ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Projects/">Projects</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Softwares/">Softwares</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sources/">Sources</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂记/">杂记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Academic-Research/" style="font-size: 20px;">Academic Research</a> <a href="/tags/Algorithms/" style="font-size: 10px;">Algorithms</a> <a href="/tags/Languages/" style="font-size: 12.5px;">Languages</a> <a href="/tags/LeetCode-OJ/" style="font-size: 10px;">LeetCode OJ</a> <a href="/tags/Projects/" style="font-size: 10px;">Projects</a> <a href="/tags/Softwares/" style="font-size: 17.5px;">Softwares</a> <a href="/tags/Sources/" style="font-size: 15px;">Sources</a> <a href="/tags/杂记/" style="font-size: 15px;">杂记</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/19/Window-Data-Layer-in-Caffe/">Window Data Layer in Caffe</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/Vehicle-Detection-Tracking-with-some-auxiliary-functions/">Vehicle Detection, Tracking with some auxiliary functions</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/一段将来给我孩子的话/">一段将来给我孩子的话</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/19/新版caffe的MATLAB接口/">新版caffe的MATLAB接口</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/06/Git时如何解决出现：Commit-your-changes-or-stash-them-before-you-can-merge/">Git时如何解决出现：Commit your changes or stash them before you can merge</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget tag">
+<h3 class="title">Friends</h3>
+<ul class="entry">
+<li><a href="http://www.ee.cuhk.edu.hk/~yangli/" title="Li Hongyang">Hongyang Li</a></li>
+<li><a href="https://sites.google.com/site/jingjingwanghomepage/" title="Wang Jingjing">Jingjing Wang</a></li>
+<li><a href="http://ice.dlut.edu.cn/lu/index.html" title="Lu Huchuan">Huchuan Lu</a></li>
+<li><a href="http://faculty.ucmerced.edu/mhyang/" title="Yang Ming-Hsuan">Ming-Hsuan Yang</a></li>
+<li><a href="http://karpathy.github.io/" title="Andrej Karpathy">Andrej Karpathy</a></li>
+<li><a href="http://www.theclevercarrot.com/" title="The Clever Carrot">The Clever Carrot</a></li>
+</ul>
+</div>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Chi Zhizhen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/Publication" class="mobile-nav-link">Publication</a>
+  
+    <a href="/Project" class="mobile-nav-link">Project</a>
+  
+    <a href="/Misc" class="mobile-nav-link">Misc</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

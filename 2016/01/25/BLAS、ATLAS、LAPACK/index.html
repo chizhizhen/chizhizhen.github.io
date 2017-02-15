@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>BLAS、ATLAS、LAPACK | Zhizhen&#39;s Attic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="记录一下数值计算方面的软件包
+BLAS (Basic Linear Algebra Subprograms)
+
+
+
+从名字可以看出来，BLAS提供了一套基础的线性代数运算例程。其内部，将这些函数分为三个层级。
+Level 1 例程执行标量与向量、向量与向量之间的运算，诸如向量的标量乘法、点乘、范数等。
+Level 2 例程执行向量与矩阵之间的运算。
+Level 3 例程执行矩阵与矩阵之间的运算。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BLAS、ATLAS、LAPACK">
+<meta property="og:url" content="http://chizhizhen.github.io/2016/01/25/BLAS、ATLAS、LAPACK/index.html">
+<meta property="og:site_name" content="Zhizhen's Attic">
+<meta property="og:description" content="记录一下数值计算方面的软件包
+BLAS (Basic Linear Algebra Subprograms)
+
+
+
+从名字可以看出来，BLAS提供了一套基础的线性代数运算例程。其内部，将这些函数分为三个层级。
+Level 1 例程执行标量与向量、向量与向量之间的运算，诸如向量的标量乘法、点乘、范数等。
+Level 2 例程执行向量与矩阵之间的运算。
+Level 3 例程执行矩阵与矩阵之间的运算。">
+<meta property="og:updated_time" content="2016-01-25T02:41:46.952Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BLAS、ATLAS、LAPACK">
+<meta name="twitter:description" content="记录一下数值计算方面的软件包
+BLAS (Basic Linear Algebra Subprograms)
+
+
+
+从名字可以看出来，BLAS提供了一套基础的线性代数运算例程。其内部，将这些函数分为三个层级。
+Level 1 例程执行标量与向量、向量与向量之间的运算，诸如向量的标量乘法、点乘、范数等。
+Level 2 例程执行向量与矩阵之间的运算。
+Level 3 例程执行矩阵与矩阵之间的运算。">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhizhen&#39;s Attic" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhizhen&#39;s Attic</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Many a little make a mickle!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/Publication">Publication</a>
+        
+          <a class="main-nav-link" href="/Project">Project</a>
+        
+          <a class="main-nav-link" href="/Misc">Misc</a>
+        
+          <a class="main-nav-link" href="/About">About</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://chizhizhen.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-BLAS、ATLAS、LAPACK" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/25/BLAS、ATLAS、LAPACK/" class="article-date">
+  <time datetime="2016-01-25T02:32:00.000Z" itemprop="datePublished">2016-01-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      BLAS、ATLAS、LAPACK
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="记录一下数值计算方面的软件包"><a href="#记录一下数值计算方面的软件包" class="headerlink" title="记录一下数值计算方面的软件包"></a>记录一下数值计算方面的软件包</h4><ul>
+<li><font color="#8470FF">BLAS (Basic Linear Algebra Subprograms)</font>
+
+</li>
+</ul>
+<p>从名字可以看出来，<a href="http://www.netlib.org/blas/" target="_blank" rel="external">BLAS</a>提供了一套基础的线性代数运算例程。其内部，将这些函数分为三个层级。</p>
+<p>Level 1 例程执行标量与向量、向量与向量之间的运算，诸如向量的标量乘法、点乘、范数等。</p>
+<p>Level 2 例程执行向量与矩阵之间的运算。</p>
+<p>Level 3 例程执行矩阵与矩阵之间的运算。</p>
+<p>具体的例程，可以参考<a href="http://www.netlib.org/blas/blasqr.pdf" target="_blank" rel="external">此手册</a>。</p>
+<p>上述手册是针对Fortran的，C的API于此大同小异。</p>
+<p>BLAS虽然是一套可移植且高效的线代库，但是并没有针对具体的及其架构进行优化。当然，机器生产商可能会提供优化后的BLAS供我们使用。此外，还可以使用ATLAS来代替BLAS。<br><a id="more"></a></p>
+<ul>
+<li><font color="#8470FF">ATLAS（Automatically Tuned Linear Algebra Software）</font>
+
+</li>
+</ul>
+<p>同样，<a href="http://math-atlas.sourceforge.net/" target="_blank" rel="external">ATLAS</a>的名字表明其是一款可自动调整优化的线性代数库。ATLAS在提供BLAS的Fortran 77 与 C接口的同时，其性能可以与针对机器优化过的BLAS例程相媲美。</p>
+<p>因此，可以说ATLAS是BLAS的一种替代方案，提供更加好的例程性能。</p>
+<ul>
+<li><font color="#8470FF">LAPACK (Linear Algebra PACKage)</font>
+
+</li>
+</ul>
+<p>BLAS只提供基础的线性代数例程，<a href="http://www.netlib.org/lapack/" target="_blank" rel="external">LAPACK</a>则提供更高等级的线性代数函数，诸如矩阵分解（LU、QR、SVD等）、线性方程组求解、最小二乘等。LAPACK内部使用BLAS执行基础运算。</p>
+<ul>
+<li><font color="#8470FF">总结</font>
+
+</li>
+</ul>
+<p>数值计算是机器学习算法的基础，诸如scikit-learn、spark ml-lib等机器学习库均直接或间接的使用BLAS、ATLAS、LAPACK作为底层的数值计算库。</p>
+<p>上述软件包，均有在不同语言下的绑定。此外，关于更具体的使用说明，请期待后续文章。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chizhizhen.github.io/2016/01/25/BLAS、ATLAS、LAPACK/" data-id="ciz681e0p0001qgfa1fkwjqck" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/25/牛客网/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          牛客网
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/23/卷积的物理意义/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">卷积的物理意义</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Image-Processing/">Image Processing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode-OJ/">LeetCode OJ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Object-Detection/">Object Detection</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Text-Editor/">Text Editor</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Languages/">Languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode-OJ/">LeetCode OJ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Projects/">Projects</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Softwares/">Softwares</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sources/">Sources</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂记/">杂记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Academic-Research/" style="font-size: 20px;">Academic Research</a> <a href="/tags/Algorithms/" style="font-size: 10px;">Algorithms</a> <a href="/tags/Languages/" style="font-size: 12.5px;">Languages</a> <a href="/tags/LeetCode-OJ/" style="font-size: 10px;">LeetCode OJ</a> <a href="/tags/Projects/" style="font-size: 10px;">Projects</a> <a href="/tags/Softwares/" style="font-size: 17.5px;">Softwares</a> <a href="/tags/Sources/" style="font-size: 15px;">Sources</a> <a href="/tags/杂记/" style="font-size: 15px;">杂记</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/19/Window-Data-Layer-in-Caffe/">Window Data Layer in Caffe</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/Vehicle-Detection-Tracking-with-some-auxiliary-functions/">Vehicle Detection, Tracking with some auxiliary functions</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/一段将来给我孩子的话/">一段将来给我孩子的话</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/19/新版caffe的MATLAB接口/">新版caffe的MATLAB接口</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/06/Git时如何解决出现：Commit-your-changes-or-stash-them-before-you-can-merge/">Git时如何解决出现：Commit your changes or stash them before you can merge</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget tag">
+<h3 class="title">Friends</h3>
+<ul class="entry">
+<li><a href="http://www.ee.cuhk.edu.hk/~yangli/" title="Li Hongyang">Hongyang Li</a></li>
+<li><a href="https://sites.google.com/site/jingjingwanghomepage/" title="Wang Jingjing">Jingjing Wang</a></li>
+<li><a href="http://ice.dlut.edu.cn/lu/index.html" title="Lu Huchuan">Huchuan Lu</a></li>
+<li><a href="http://faculty.ucmerced.edu/mhyang/" title="Yang Ming-Hsuan">Ming-Hsuan Yang</a></li>
+<li><a href="http://karpathy.github.io/" title="Andrej Karpathy">Andrej Karpathy</a></li>
+<li><a href="http://www.theclevercarrot.com/" title="The Clever Carrot">The Clever Carrot</a></li>
+</ul>
+</div>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Chi Zhizhen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/Publication" class="mobile-nav-link">Publication</a>
+  
+    <a href="/Project" class="mobile-nav-link">Project</a>
+  
+    <a href="/Misc" class="mobile-nav-link">Misc</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

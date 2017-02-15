@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>深度学习中的咖啡理论 | Zhizhen&#39;s Attic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="依赖环境库依赖库有一种“大三元”的叫法：如图，就是这三个目录，分别存着：动态库、引用头文件，静态库。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习中的咖啡理论">
+<meta property="og:url" content="http://chizhizhen.github.io/2016/03/07/深度学习中的咖啡理论/index.html">
+<meta property="og:site_name" content="Zhizhen's Attic">
+<meta property="og:description" content="依赖环境库依赖库有一种“大三元”的叫法：如图，就是这三个目录，分别存着：动态库、引用头文件，静态库。">
+<meta property="og:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/dll_lib_include.png">
+<meta property="og:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/debug_lib.png">
+<meta property="og:updated_time" content="2016-03-25T08:27:05.766Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习中的咖啡理论">
+<meta name="twitter:description" content="依赖环境库依赖库有一种“大三元”的叫法：如图，就是这三个目录，分别存着：动态库、引用头文件，静态库。">
+<meta name="twitter:image" content="http://7xqe1l.com1.z0.glb.clouddn.com/dll_lib_include.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhizhen&#39;s Attic" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhizhen&#39;s Attic</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Many a little make a mickle!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/Publication">Publication</a>
+        
+          <a class="main-nav-link" href="/Project">Project</a>
+        
+          <a class="main-nav-link" href="/Misc">Misc</a>
+        
+          <a class="main-nav-link" href="/About">About</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://chizhizhen.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-深度学习中的咖啡理论" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/07/深度学习中的咖啡理论/" class="article-date">
+  <time datetime="2016-03-07T13:40:27.000Z" itemprop="datePublished">2016-03-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Caffe/">Caffe</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      深度学习中的咖啡理论
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="依赖环境库"><a href="#依赖环境库" class="headerlink" title="依赖环境库"></a>依赖环境库</h4><p>依赖库有一种“大三元”的叫法：<br><img src="http://7xqe1l.com1.z0.glb.clouddn.com/dll_lib_include.png" alt=""><br>如图，就是这三个目录，分别存着：动态库、引用头文件，静态库。<br><a id="more"></a><br>(I)先说说静态库，VS的静态库是lib文件，GCC的静态库是a文件。<br>静态库只能在编译阶段的链接器中使用，这与C/C++的分离式编程有关。<br>众所周知，C/C++倡导声明定义分离，这大大加快了整体编译速度，以及方便外部调用。<br>于是编译阶段分为两部门：先进行声明的分析，然后再把定义填充进去。<br>声明的全部内容通常是提供给外部的，是由零碎的头文件组成，你想用就#include就好了。<br>定义的内容，会被链接器灌装起来。根据灌装模式的不同，就出现了静态编译和动态编译两类。<br>根据生成内容的不同，又可以分为可执行文件生成和库生成两类。<br>利用笛卡尔积，我们大概得到四种模式：<br>★库生成，静态编译（ h文件+lib文件(VC) 或者h文件+a文件(GCC) )<br>★库生成，动态编译  (不存在)<br>★可执行文件生成，静态编译 (exe文件)<br>★可执行文件生成，动态编译 ( exe文件+dll or bin文件+so文件(Linux) )<br>其中第二种方式是不存在的。所以针对库生成而言，我们只需要h+lib/a文件即可。<br>它们应当分别放到include和lib文件夹中。</p>
+<p>在VS中配置头文件/静态库很简单，分为两步：<br>★在工程属性-VC++目录中指定”包含目录”以及”库目录“，分别为h目录以及lib目录<br>★在工程属性-链接器-输入中，手动添加需要的lib文件<br>第二步相当重要，如果不做，那么编译是不会错的，但是在链接定义的时候，会找不到lib中的定义：</p>
+<p><font color="#FF0000"> error LNK2001: 无法解析的外部符号 </font><br>如果你的lib目录没错，那么试着找一找，是不是没有手动添加lib文件(VS不会自动扫描目录文件并且添加)</p>
+<p>(II)再说说动态库，这个方式只有在选择了Release模式编译之后，才会使用。<br>先说说Debug和Release的区别。<br>Debug版本一般不用来发布，不仅是因为里面包含了Debug代码，而且没有做编译优化，性能有折扣。<br>但是有一点好处，就是可以断点、调试，但这非常麻烦。<br>由于外部依赖库的灌装，你要Debug你的程序，需要提供pdb符号文件，这意味着你得自己把所有依赖库<br>自己编译一遍，得到pdb文件，否则无法Debug，也就无法断点调试。<br>因为无法断点，所以Debug只能靠人工推理出断点（推测可能位置，加cout/printf语句测试）<br>还有一点，就是Debug版本在调试模式中的执行只需要lib文件，如图：<br><img src="http://7xqe1l.com1.z0.glb.clouddn.com/debug_lib.png" alt=""><br>但是，一旦你把Debug版本的exe文件拿到别处，就需要dll文件了，这时候需要动态库。<br>Release版本则是强制使用动态库，就算是调试模式也无效。</p>
+<p>在VS中配置动态库很简单，只要一步<br>★在工程属性-调试中，指定”环境”的值为：PATH=%PATH%;C:\xxx\bin<br>确保bin里存在需要的dll文件，否则OS会一致提示你缺少dll文件。</p>
+<p>另外，Debug和Release版本需要的lib文件和dll文件均是不同的，不能混用。<br>一般文件名后补一个”d”，表示这是Debug版本的dll/lib。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://chizhizhen.github.io/2016/03/07/深度学习中的咖啡理论/" data-id="ciz681e5f002kqgfawr0p33sk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sources/">Sources</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/18/CV大佬们的鸡汤文/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          CV大佬们的鸡汤文
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/07/Inspiring-Websites-for-Academic-Research/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Inspiring Websites for Academic Research</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithms/">Algorithms</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Caffe/">Caffe</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Image-Processing/">Image Processing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode-OJ/">LeetCode OJ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Object-Detection/">Object Detection</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Text-Editor/">Text Editor</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Academic-Research/">Academic Research</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Languages/">Languages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode-OJ/">LeetCode OJ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Projects/">Projects</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Softwares/">Softwares</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sources/">Sources</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂记/">杂记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Academic-Research/" style="font-size: 20px;">Academic Research</a> <a href="/tags/Algorithms/" style="font-size: 10px;">Algorithms</a> <a href="/tags/Languages/" style="font-size: 12.5px;">Languages</a> <a href="/tags/LeetCode-OJ/" style="font-size: 10px;">LeetCode OJ</a> <a href="/tags/Projects/" style="font-size: 10px;">Projects</a> <a href="/tags/Softwares/" style="font-size: 17.5px;">Softwares</a> <a href="/tags/Sources/" style="font-size: 15px;">Sources</a> <a href="/tags/杂记/" style="font-size: 15px;">杂记</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/19/Window-Data-Layer-in-Caffe/">Window Data Layer in Caffe</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/Vehicle-Detection-Tracking-with-some-auxiliary-functions/">Vehicle Detection, Tracking with some auxiliary functions</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/20/一段将来给我孩子的话/">一段将来给我孩子的话</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/19/新版caffe的MATLAB接口/">新版caffe的MATLAB接口</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/06/Git时如何解决出现：Commit-your-changes-or-stash-them-before-you-can-merge/">Git时如何解决出现：Commit your changes or stash them before you can merge</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget tag">
+<h3 class="title">Friends</h3>
+<ul class="entry">
+<li><a href="http://www.ee.cuhk.edu.hk/~yangli/" title="Li Hongyang">Hongyang Li</a></li>
+<li><a href="https://sites.google.com/site/jingjingwanghomepage/" title="Wang Jingjing">Jingjing Wang</a></li>
+<li><a href="http://ice.dlut.edu.cn/lu/index.html" title="Lu Huchuan">Huchuan Lu</a></li>
+<li><a href="http://faculty.ucmerced.edu/mhyang/" title="Yang Ming-Hsuan">Ming-Hsuan Yang</a></li>
+<li><a href="http://karpathy.github.io/" title="Andrej Karpathy">Andrej Karpathy</a></li>
+<li><a href="http://www.theclevercarrot.com/" title="The Clever Carrot">The Clever Carrot</a></li>
+</ul>
+</div>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Chi Zhizhen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/Publication" class="mobile-nav-link">Publication</a>
+  
+    <a href="/Project" class="mobile-nav-link">Project</a>
+  
+    <a href="/Misc" class="mobile-nav-link">Misc</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
